@@ -27,12 +27,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun TransparentIconButton(modifier: Modifier, icon: ImageVector, name: String, onClick: () -> Unit) {
+fun TransparentIconButton(
+    modifier: Modifier,
+    enabled: Boolean = false,
+    icon: ImageVector,
+    name: String,
+    onClick: () -> Unit
+) {
+    var contentColor = Color(0xFFAC62DA)
+    if(enabled) contentColor = Color(0xFFFFFFFF)
+
     OutlinedButton(
         modifier = modifier,
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,
-            contentColor = Color(0xFFAC62DA)
+            contentColor = contentColor
         ),
         border = BorderStroke(0.dp, Color.Transparent),
         onClick = onClick

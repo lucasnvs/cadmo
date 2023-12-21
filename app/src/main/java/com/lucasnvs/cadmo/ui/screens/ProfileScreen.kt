@@ -9,13 +9,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.lucasnvs.cadmo.CadmoAppState
 import com.lucasnvs.cadmo.ui.components.CadmoBottomAppBar
 import com.lucasnvs.cadmo.ui.components.CadmoSimpleTopAppBar
 
 @Composable
 fun ProfileScreen(
     modifier: Modifier = Modifier,
-    navController: NavController
+    appState: CadmoAppState,
 ) {
     Scaffold(
         topBar = {
@@ -23,8 +24,9 @@ fun ProfileScreen(
         },
         bottomBar = {
             CadmoBottomAppBar(
-                onNavigateToHome = { navController.popBackStack() },
-                onNavigateToDepartament = { navController.navigate(Screen.DepartamentScreen.route) { popUpTo(Screen.HomeScreen.route)} },
+                currentDestination = appState.currentDestination,
+                onNavigateToHome = { appState.popBackStack() },
+                onNavigateToDepartament = { appState.navigate(Screen.DepartamentScreen) },
                 onNavigateToProfile = {}
             )
         },
@@ -39,5 +41,5 @@ fun ProfileScreen(
 @Preview(showBackground = true)
 @Composable
 fun ProfileScreenPreview() {
-    ProfileScreen(navController = rememberNavController())
+//    ProfileScreen(navController = rememberNavController())
 }

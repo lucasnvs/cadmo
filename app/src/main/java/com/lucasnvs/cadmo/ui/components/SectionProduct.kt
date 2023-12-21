@@ -16,10 +16,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.lucasnvs.cadmo.ui.viewmodel.HomeViewModel
 import java.util.Locale
 
 @Composable
-fun SectionProduct(modifier: Modifier, name: String, products: List<DataProduct>) {
+fun SectionProduct(
+    modifier: Modifier,
+    name: String,
+    products: List<HomeViewModel.HomeItemUiState>
+) {
     Column(
         verticalArrangement = Arrangement.spacedBy(
             space = 10.dp,
@@ -53,12 +58,12 @@ fun SectionProduct(modifier: Modifier, name: String, products: List<DataProduct>
 @Preview(showBackground = true)
 @Composable
 fun SectionProductPreview() {
-    val products = listOf(
-        DataProduct("Placa de Vídeo RTX 4060 EAGLE OC Gigabyte NVIDIA GeForce, 8GB GDUAL novo novo novo novo", 1954.99),
-        DataProduct("Placa de Vídeo RTX 4060 EAGLE OC Gigabyte NVIDIA GeForce, 8GB GDUAL novo novo novo novo", 1954.99),
-        DataProduct("Placa de Vídeo RTX 4060 EAGLE OC Gigabyte NVIDIA GeForce, 8GB GDUAL novo novo novo novo", 1954.99),
-        DataProduct("Placa de Vídeo RTX 4060 EAGLE OC Gigabyte NVIDIA GeForce, 8GB GDUAL novo novo novo novo", 1954.99),
-    )
+//    val products = listOf(
+//        DataProduct("Placa de Vídeo RTX 4060 EAGLE OC Gigabyte NVIDIA GeForce, 8GB GDUAL novo novo novo novo", 1954.99),
+//        DataProduct("Placa de Vídeo RTX 4060 EAGLE OC Gigabyte NVIDIA GeForce, 8GB GDUAL novo novo novo novo", 1954.99),
+//        DataProduct("Placa de Vídeo RTX 4060 EAGLE OC Gigabyte NVIDIA GeForce, 8GB GDUAL novo novo novo novo", 1954.99),
+//        DataProduct("Placa de Vídeo RTX 4060 EAGLE OC Gigabyte NVIDIA GeForce, 8GB GDUAL novo novo novo novo", 1954.99),
+//    )
 
-    SectionProduct(Modifier, name = "MAIS PROCURADOS", products = products)
+//    SectionProduct(Modifier, name = "MAIS PROCURADOS", products = products)
 }

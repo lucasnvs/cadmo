@@ -11,13 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.lucasnvs.cadmo.CadmoAppState
 import com.lucasnvs.cadmo.ui.components.CadmoBottomAppBar
 import com.lucasnvs.cadmo.ui.components.CadmoSimpleTopAppBar
 
 @Composable
 fun DepartamentScreen(
     modifier: Modifier = Modifier,
-    navController: NavController
+    appState: CadmoAppState,
 ) {
     Scaffold(
         topBar = {
@@ -25,9 +26,10 @@ fun DepartamentScreen(
         },
         bottomBar = {
             CadmoBottomAppBar(
-                onNavigateToHome = { navController.popBackStack(route = Screen.HomeScreen.route, inclusive = false, saveState = false) },
+                currentDestination = appState.currentDestination,
+                onNavigateToHome = { appState.popBackStack(route = Screen.HomeScreen.route, inclusive = false, saveState = false) },
                 onNavigateToDepartament = {},
-                onNavigateToProfile = {navController.navigate(Screen.ProfileScreen.route) { popUpTo(Screen.HomeScreen.route)} }
+                onNavigateToProfile = {appState.navigate(Screen.ProfileScreen)}
             )
         },
     ) { innerPadding ->
@@ -40,5 +42,5 @@ fun DepartamentScreen(
 @Preview(showBackground = true)
 @Composable
 fun DepartamentScreenPreview() {
-    DepartamentScreen(navController = rememberNavController())
+//    DepartamentScreen(navController = rememberNavController())
 }

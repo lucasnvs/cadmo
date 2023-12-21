@@ -1,6 +1,9 @@
 package com.lucasnvs.cadmo
 
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,20 +16,22 @@ import com.lucasnvs.cadmo.ui.screens.Screen
 @Composable
 fun Navigation() {
     val navController: NavHostController = rememberNavController()
+    val appState = CadmoAppState( navController = navController )
+
     NavHost(
         navController = navController,
         startDestination = Screen.HomeScreen.route
     ) {
         composable(Screen.HomeScreen.route) {
-            HomeScreen( navController = navController )
+            HomeScreen( appState = appState )
         }
 
         composable(Screen.DepartamentScreen.route) {
-            DepartamentScreen ( navController = navController)
+            DepartamentScreen ( appState = appState )
         }
 
         composable(Screen.ProfileScreen.route) {
-            ProfileScreen( navController = navController )
+            ProfileScreen( appState = appState )
         }
     }
 }

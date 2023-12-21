@@ -23,7 +23,10 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CadmoTopAppBar(modifier: Modifier = Modifier) {
+fun CadmoTopAppBar(
+    modifier: Modifier = Modifier,
+    actionOnClick: () -> Unit,
+) {
     var searchValue by remember {
         mutableStateOf("")
     }
@@ -42,7 +45,7 @@ fun CadmoTopAppBar(modifier: Modifier = Modifier) {
                     containerColor = Color(0xFF7B08B1),
                     contentColor = Color(0xFFAC62DA),
                 ),
-                onClick = { /* TODO */ },
+                onClick = actionOnClick,
                 modifier = modifier.height(50.dp)
             ) {
                 Icon(
@@ -58,5 +61,5 @@ fun CadmoTopAppBar(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun CadmoTopAppBarPreview() {
-    CadmoTopAppBar()
+//    CadmoTopAppBar()
 }

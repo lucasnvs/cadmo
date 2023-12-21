@@ -9,7 +9,7 @@ data class Product(
     val id: Int,
     @SerialName(value = "nome")
     val name: String,
-    @SerialName(value = "preco")
+    @SerialName(value = "preco_formatado")
     val price: String,
     @SerialName(value = "img")
     val imgSrc: String,
