@@ -56,13 +56,7 @@ fun Product(modifier: Modifier, product: HomeViewModel.HomeItemUiState) {
     var cartIconColor = Color(0xFFC3C1C1)
     if(product.isOnCart) cartIconColor = Color(0xFF7B08B1)
 
-    val reqPainter = rememberAsyncImagePainter(product.img)
-
-    val painter = if(reqPainter.state is AsyncImagePainter.State.Success) {
-        reqPainter
-    } else {
-        painterResource(R.drawable.product_example)
-    }
+    val painter = rememberAsyncImagePainter(product.img)
 
     Box(modifier = modifier
         .shadow(elevation = 3.dp)
