@@ -2,6 +2,8 @@ package com.lucasnvs.cadmo.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -63,28 +65,12 @@ fun HomeScreen(
         },
 
     ) { innerPadding ->
-        Box(
-            modifier
-                .padding(innerPadding)
-        ) {
-
-            if(viewModel.uiState.isFetchingProducts) {
-                CircularProgressIndicator(Modifier.align(Alignment.Center))
-            }
-
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(
-                    space = 10.dp,
-                    alignment = Alignment.CenterVertically
-                ),
-            ) {
-                items(viewModel.uiState.sections.entries.toList()) { (sectionName, products) ->
-                    SectionProduct(modifier = modifier, name = sectionName, products = products)
-                }
-            }
+        if(viewModel.uiState.isFetchingProducts) {
+            Loading(modifier, innerPadding)
+        } else {
+            Content(innerPadding = innerPadding, viewModel = viewModel)
         }
     }
-
 }
 
 @Preview(showBackground = true)
@@ -92,5 +78,36 @@ fun HomeScreen(
 fun HomeScreenPreview() {
     CadmoTheme {
 //        HomeScreen()
+    }
+}
+
+@Composable
+fun Content( modifier: Modifier = Modifier, innerPadding: PaddingValues, viewModel: HomeViewModel) {
+
+    Box(
+        modifier
+            .padding(innerPadding)
+    ) {
+
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(
+                space = 10.dp,
+                alignment = Alignment.CenterVertically
+            ),
+        ) {
+            items(viewModel.uiState.sections.entries.toList()) { (sectionName, products) ->
+                SectionProduct(modifier = modifier, name = sectionName, products = products, viewModel = viewModel)
+            }
+        }
+    }
+}
+
+@Composable
+fun Loading(modifier: Modifier, innerPadding: PaddingValues) {
+    Box(modifier = modifier
+        .padding(innerPadding)
+        .fillMaxSize()
+    ) {
+        CircularProgressIndicator()
     }
 }

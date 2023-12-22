@@ -23,7 +23,8 @@ import java.util.Locale
 fun SectionProduct(
     modifier: Modifier,
     name: String,
-    products: List<HomeViewModel.HomeItemUiState>
+    products: List<HomeViewModel.HomeItemUiState>,
+    viewModel: HomeViewModel
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(
@@ -49,7 +50,11 @@ fun SectionProduct(
             )
         ) {
             items(items = products, itemContent = {
-                Product(modifier = modifier, product = it)
+                Product(modifier = modifier, product = it,
+                    onCartButtonClick = {
+                        // Atualiza o estado isOnCart do ViewModel
+                        viewModel.onItemCartClicked(it) // Supondo que você tenha uma função assim no seu ViewModel
+                    })
             })
         }
     }

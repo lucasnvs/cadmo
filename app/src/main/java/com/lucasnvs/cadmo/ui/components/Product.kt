@@ -43,13 +43,9 @@ import com.lucasnvs.cadmo.R
 import com.lucasnvs.cadmo.ui.viewmodel.HomeViewModel
 
 @Composable
-fun Product(modifier: Modifier, product: HomeViewModel.HomeItemUiState) {
+fun Product(modifier: Modifier, product: HomeViewModel.HomeItemUiState, onCartButtonClick: () -> Unit) {
 
     fun handleClickBuyButton() {
-
-    }
-
-    fun handleClickCartButton() {
 
     }
 
@@ -83,7 +79,7 @@ fun Product(modifier: Modifier, product: HomeViewModel.HomeItemUiState) {
                         containerColor = Color.Transparent,
                         contentColor = cartIconColor,
                     ),
-                    onClick = { handleClickCartButton() },
+                    onClick = onCartButtonClick,
                     modifier = modifier.size(25.dp)
                 ) {
                     Icon(
@@ -190,6 +186,6 @@ fun ProductPreview() {
             "Monitor Gamer",
             price = "R$ 1149,99",
             img = "https://images8.kabum.com.br/produtos/fotos/444038/monitor-gamer-lg-ultragear-27-full-hd-144hz-1ms-ips-hdmi-e-displayport-hdr-10-99-srgb-freesync-premium-vesa-27gn65r_1684763831_m.jpg"
-        ))
+        ), {})
     }
 }

@@ -1,6 +1,7 @@
 package com.lucasnvs.cadmo.ui.viewmodel
 
 import android.util.Log
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -17,7 +18,7 @@ class HomeViewModel(
 ) : ViewModel() {
 
     data class HomeItemUiState(
-        val isOnCart: Boolean = true,
+        val isOnCart: Boolean = false,
         val name: String,
         val price: String,
         val img: String,
@@ -26,7 +27,7 @@ class HomeViewModel(
     data class HomeUiState(
         var isFetchingProducts: Boolean = false,
         val isSignedIn: Boolean = false,
-        val productItems: List<HomeItemUiState> = listOf(),
+        var productItems: List<HomeItemUiState> = listOf(),
         val sections: Map<String, List<HomeItemUiState>> = mutableMapOf()
     )
 
@@ -39,6 +40,21 @@ class HomeViewModel(
         fetchProducts()
     }
 
+    fun onItemCartClicked(item: HomeItemUiState) {
+        Log.i("itemviewmodel", item.name + " clicked")
+        val updatedItem = item.copy(isOnCart = !item.isOnCart)
+        Log.i("itemviewmodel", item.isOnCart.toString())
+
+        // Atualiza a lista de produtos com o item modificado
+        val newList = uiState.productItems.toMutableList().also { productList ->
+            val index = productList.indexOfFirst { it.name == item.name }
+            if (index != -1) {
+                productList[index] = updatedItem
+            }
+        }
+        uiState = uiState.copy(productItems = newList)
+        Log.i("itemviewmodel", uiState.productItems.toString())
+    }
     private fun mapProduct(product: Product): HomeItemUiState {
         return HomeItemUiState(
             name = product.name,
@@ -78,6 +94,7 @@ class HomeViewModel(
         fetchJob = viewModelScope.launch {
             try {
                 val productItems = repository.getKabumProducts()
+
 
                 uiState = uiState.copy(
                     isFetchingProducts = false,
