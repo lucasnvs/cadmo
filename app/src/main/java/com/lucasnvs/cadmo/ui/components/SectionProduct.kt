@@ -52,8 +52,7 @@ fun SectionProduct(
             items(items = products, itemContent = {
                 Product(modifier = modifier, product = it,
                     onCartButtonClick = {
-                        // Atualiza o estado isOnCart do ViewModel
-                        viewModel.onItemCartClicked(it) // Supondo que você tenha uma função assim no seu ViewModel
+                        viewModel.onItemCartClicked(it)
                     })
             })
         }
@@ -63,12 +62,5 @@ fun SectionProduct(
 @Preview(showBackground = true)
 @Composable
 fun SectionProductPreview() {
-//    val products = listOf(
-//        DataProduct("Placa de Vídeo RTX 4060 EAGLE OC Gigabyte NVIDIA GeForce, 8GB GDUAL novo novo novo novo", 1954.99),
-//        DataProduct("Placa de Vídeo RTX 4060 EAGLE OC Gigabyte NVIDIA GeForce, 8GB GDUAL novo novo novo novo", 1954.99),
-//        DataProduct("Placa de Vídeo RTX 4060 EAGLE OC Gigabyte NVIDIA GeForce, 8GB GDUAL novo novo novo novo", 1954.99),
-//        DataProduct("Placa de Vídeo RTX 4060 EAGLE OC Gigabyte NVIDIA GeForce, 8GB GDUAL novo novo novo novo", 1954.99),
-//    )
-
-//    SectionProduct(Modifier, name = "MAIS PROCURADOS", products = products)
+//    SectionProduct(modifier = , name = , products = , viewModel = )
 }

@@ -1,10 +1,8 @@
-package com.lucasnvs.cadmo.ui.components
+package com.lucasnvs.cadmo.ui.components.bars
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -12,16 +10,17 @@ import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
+import com.lucasnvs.cadmo.ui.components.buttons.TransparentIconButton
 import com.lucasnvs.cadmo.ui.screens.Screen
+import com.lucasnvs.cadmo.ui.theme.PrincipalColor
 
 @Composable
-fun CadmoBottomAppBar(
+fun NavigationBottomBar(
     modifier: Modifier = Modifier,
     currentDestination: NavDestination?,
     onNavigateToHome: () -> Unit,
@@ -41,13 +40,13 @@ fun CadmoBottomAppBar(
 
     BottomAppBar(
         modifier = modifier,
-        containerColor = Color(0xFF7B08B1),
+        containerColor = PrincipalColor,
         content = {
             Row(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp) // Adapte conforme necessário
+                    .padding(horizontal = 16.dp)
             ) {
                 TransparentIconButton(modifier, icon = Icons.Filled.Home, enabled = isInHome, name = "Home", onClick = onNavigateToHome)
                 TransparentIconButton(modifier, icon = Icons.Filled.List, enabled = isInDept, name = "Departamentos", onClick = onNavigateToDepartament)
@@ -61,10 +60,10 @@ fun CadmoBottomAppBar(
 @Preview(showBackground = true)
 @Composable
 fun CadmoBottomAppBarPreview() {
-    CadmoBottomAppBar(
+    NavigationBottomBar(
         currentDestination = NavDestination(Screen.HomeScreen.route),
-        onNavigateToHome = { /*TODO*/ },
-        onNavigateToProfile = { /*TODO*/ },
+        onNavigateToHome = { },
+        onNavigateToProfile = { },
         onNavigateToDepartament = {}
     )
 }

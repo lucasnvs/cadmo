@@ -40,6 +40,8 @@ import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
 import com.lucasnvs.cadmo.R
+import com.lucasnvs.cadmo.ui.theme.LightGrayColor
+import com.lucasnvs.cadmo.ui.theme.PrincipalColor
 import com.lucasnvs.cadmo.ui.viewmodel.HomeViewModel
 
 @Composable
@@ -49,8 +51,8 @@ fun Product(modifier: Modifier, product: HomeViewModel.HomeItemUiState, onCartBu
 
     }
 
-    var cartIconColor = Color(0xFFC3C1C1)
-    if(product.isOnCart) cartIconColor = Color(0xFF7B08B1)
+    var cartIconColor = LightGrayColor
+    if(product.isOnCart) cartIconColor = PrincipalColor
 
     val painter = rememberAsyncImagePainter(product.img)
 
@@ -128,7 +130,7 @@ fun Product(modifier: Modifier, product: HomeViewModel.HomeItemUiState, onCartBu
                                 fontSize = 11.sp,
                                 fontFamily = FontFamily.SansSerif,
                                 fontWeight = FontWeight(700),
-                                color = Color(0xFF7B08B1),
+                                color = PrincipalColor,
                             )
                         )
                         Text(
@@ -154,7 +156,7 @@ fun Product(modifier: Modifier, product: HomeViewModel.HomeItemUiState, onCartBu
                     modifier = modifier.fillMaxWidth(),
                     elevation = ButtonDefaults.buttonElevation(10.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF7B08B1),
+                        containerColor = PrincipalColor,
                         contentColor = Color(0xFFFFFFFF)
                     ),
                     shape = RoundedCornerShape(2.dp),

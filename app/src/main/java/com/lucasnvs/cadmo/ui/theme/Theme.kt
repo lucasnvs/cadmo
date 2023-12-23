@@ -41,7 +41,7 @@ private val LightColorScheme = lightColorScheme(
 fun CadmoTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -63,7 +63,7 @@ fun CadmoTheme(
     }
 
     MaterialTheme(
-        colorScheme = LightColorScheme, // colorScheme
+        colorScheme = colorScheme,
         typography = Typography,
         content = content
     )

@@ -23,6 +23,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.lucasnvs.cadmo.ui.theme.LightGrayColor
+import com.lucasnvs.cadmo.ui.theme.PrincipalColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,10 +40,10 @@ fun SearchTextField(
         focusedBorderColor = Color.White,
         unfocusedTextColor = Color.Black,
         focusedTextColor = Color.Black,
-        focusedLeadingIconColor = Color(0xFFC3C1C1),
-        unfocusedLeadingIconColor = Color(0xFFC3C1C1),
-        focusedPlaceholderColor = Color(0xFFC3C1C1),
-        unfocusedPlaceholderColor = Color(0xFFC3C1C1),
+        focusedLeadingIconColor = LightGrayColor,
+        unfocusedLeadingIconColor = LightGrayColor,
+        focusedPlaceholderColor = LightGrayColor,
+        unfocusedPlaceholderColor = LightGrayColor,
     )
 
     val interactionSource = remember {
@@ -58,7 +60,7 @@ fun SearchTextField(
         textStyle = TextStyle(
             fontSize = 17.sp,
         ),
-        cursorBrush = SolidColor(Color(0xFF7B08B1)),
+        cursorBrush = SolidColor(PrincipalColor),
         singleLine = singleLine,
         value = searchValue,
         onValueChange = {

@@ -1,4 +1,4 @@
-package com.lucasnvs.cadmo.ui.components
+package com.lucasnvs.cadmo.ui.components.buttons
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background

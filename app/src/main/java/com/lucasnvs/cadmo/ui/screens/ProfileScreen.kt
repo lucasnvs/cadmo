@@ -7,11 +7,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import androidx.compose.ui.unit.sp
 import com.lucasnvs.cadmo.CadmoAppState
-import com.lucasnvs.cadmo.ui.components.CadmoBottomAppBar
-import com.lucasnvs.cadmo.ui.components.CadmoSimpleTopAppBar
+import com.lucasnvs.cadmo.ui.components.bars.NavigationBottomBar
+import com.lucasnvs.cadmo.ui.components.bars.MainTopBar
 
 @Composable
 fun ProfileScreen(
@@ -20,10 +19,10 @@ fun ProfileScreen(
 ) {
     Scaffold(
         topBar = {
-            CadmoSimpleTopAppBar(title = "Meu Perfil")
+            MainTopBar(title = { Text(text = "Meu Perfil", fontSize = 19.sp) })
         },
         bottomBar = {
-            CadmoBottomAppBar(
+            NavigationBottomBar(
                 currentDestination = appState.currentDestination,
                 onNavigateToHome = { appState.popBackStack() },
                 onNavigateToDepartament = { appState.navigate(Screen.DepartamentScreen) },
