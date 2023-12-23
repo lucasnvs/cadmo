@@ -1,6 +1,5 @@
 package com.lucasnvs.cadmo.ui.viewmodel
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -24,9 +23,8 @@ class HomeViewModel(
     )
 
     data class HomeUiState(
-        var isFetchingProducts: Boolean = false,
+        var isFetchingSections: Boolean = false,
         val isSignedIn: Boolean = false,
-        var productItems: List<HomeItemUiState> = listOf(),
         val sections: Map<String, List<HomeItemUiState>> = mutableMapOf()
     )
 
@@ -36,24 +34,13 @@ class HomeViewModel(
         private set
 
     init {
-        fetchProducts()
+        fetchSections()
     }
 
     fun onItemCartClicked(item: HomeItemUiState) {
-        Log.i("itemviewmodel", item.name + " clicked")
-        val updatedItem = item.copy(isOnCart = !item.isOnCart)
-        Log.i("itemviewmodel", item.isOnCart.toString())
 
-        // Atualiza a lista de produtos com o item modificado
-        val newList = uiState.productItems.toMutableList().also { productList ->
-            val index = productList.indexOfFirst { it.name == item.name }
-            if (index != -1) {
-                productList[index] = updatedItem
-            }
-        }
-        uiState = uiState.copy(productItems = newList)
-        Log.i("itemviewmodel", uiState.productItems.toString())
     }
+
     private fun mapProduct(product: Product): HomeItemUiState {
         return HomeItemUiState(
             name = product.name,
@@ -62,43 +49,32 @@ class HomeViewModel(
         )
     }
 
-    private fun mapAllProducts(productsList: List<Product>): List<HomeItemUiState> {
-        return productsList.map { mapProduct(it) }
-    }
+    fun convertProductMapToHomeItemUiStateMap(productMap: Map<String, List<Product>>): Map<String, List<HomeItemUiState>> {
+        val homeItemUiStateMap = mutableMapOf<String, List<HomeItemUiState>>()
 
-    private fun sectionIsOpenBox(produtos: List<Product>): Map<String, List<HomeItemUiState>> {
-        val map = mutableMapOf<String, MutableList<HomeItemUiState>>()
-        map["É openbox"] = mutableListOf()
-        map["Não é openbox"] = mutableListOf()
-
-        for (produto in produtos) {
-            val check = produto.isOpenBox
-
-            if(check) {
-                map["É openbox"]!!.add(mapProduct(produto))
-            } else {
-                map["Não é openbox"]!!.add(mapProduct(produto))
+        for ((key, productList) in productMap) {
+            val homeItemUiStateList = productList.map { product ->
+                mapProduct(product)
             }
+            homeItemUiStateMap[key] = homeItemUiStateList
         }
 
-        return map
+        return homeItemUiStateMap
     }
 
     private var fetchJob: Job? = null
 
-    fun fetchProducts() {
+    fun fetchSections() {
         fetchJob?.cancel()
-        uiState = uiState.copy(isFetchingProducts = true)
+        uiState = uiState.copy(isFetchingSections = true)
 
         fetchJob = viewModelScope.launch {
             try {
-                val productItems = repository.getKabumProducts()
-
+                val sections = repository.getSections()
 
                 uiState = uiState.copy(
-                    isFetchingProducts = false,
-                    sections = sectionIsOpenBox(productItems),
-                    productItems = mapAllProducts(productItems)
+                    isFetchingSections = false,
+                    sections = convertProductMapToHomeItemUiStateMap(sections),
                 )
 
             } catch (ioe: IOException) {

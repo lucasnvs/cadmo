@@ -40,6 +40,8 @@ fun HomeScreen(
     appState: CadmoAppState,
     viewModel: HomeViewModel = viewModel(),
 ) {
+    val sections by viewModel.uiState.sections.st
+
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
