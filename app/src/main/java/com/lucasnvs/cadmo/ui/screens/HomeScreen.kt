@@ -1,6 +1,5 @@
 package com.lucasnvs.cadmo.ui.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -23,15 +22,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.lucasnvs.cadmo.CadmoAppState
-import com.lucasnvs.cadmo.ui.components.bars.NavigationBottomBar
-import com.lucasnvs.cadmo.ui.components.bars.MainTopBar
 import com.lucasnvs.cadmo.ui.components.SearchTextField
 import com.lucasnvs.cadmo.ui.components.SectionProduct
+import com.lucasnvs.cadmo.ui.components.bars.MainTopBar
+import com.lucasnvs.cadmo.ui.components.bars.NavigationBottomBar
 import com.lucasnvs.cadmo.ui.theme.CadmoTheme
 import com.lucasnvs.cadmo.ui.viewmodel.HomeViewModel
 import kotlinx.coroutines.launch

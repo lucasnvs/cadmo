@@ -7,7 +7,7 @@ interface KabumProductsRepository {
     suspend fun getKabumProducts(): List<Product>
 }
 
-class NetworkKabumProductsRepository(): KabumProductsRepository {
+class NetworkKabumProductsRepository : KabumProductsRepository {
     override suspend fun getKabumProducts(): List<Product> {
         return KabumApi.retrofitService.getProducts().produtos
     }

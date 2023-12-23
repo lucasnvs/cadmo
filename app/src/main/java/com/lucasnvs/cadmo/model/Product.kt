@@ -15,5 +15,4 @@ data class Product(
     val imgSrc: String,
     @SerialName(value = "is_openbox")
     val isOpenBox: Boolean,
-) {
-}
+)
