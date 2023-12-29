@@ -1,5 +1,6 @@
 package com.lucasnvs.cadmo.ui.components
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +22,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -46,7 +48,7 @@ fun Product(modifier: Modifier, product: HomeViewModel.HomeItemUiState, onCartBu
     }
 
     var cartIconColor = LightGrayColor
-    if(product.isOnCart) cartIconColor = PrincipalColor
+    if(product.isOnCart.value) cartIconColor = PrincipalColor
 
     val painter = rememberAsyncImagePainter(product.img)
 
@@ -171,6 +173,7 @@ fun Product(modifier: Modifier, product: HomeViewModel.HomeItemUiState, onCartBu
     }
 }
 
+@SuppressLint("UnrememberedMutableState")
 @Preview(showBackground = true)
 @Composable
 fun ProductPreview() {
@@ -178,7 +181,7 @@ fun ProductPreview() {
         .background(Color(0xFFFCFCCC))
         .padding(10.dp)) {
         Product(modifier = Modifier, product = HomeViewModel.HomeItemUiState(
-            isOnCart = false,
+            isOnCart = mutableStateOf(false),
             "Monitor Gamer",
             price = "R$ 1149,99",
             img = "https://images8.kabum.com.br/produtos/fotos/444038/monitor-gamer-lg-ultragear-27-full-hd-144hz-1ms-ips-hdmi-e-displayport-hdr-10-99-srgb-freesync-premium-vesa-27gn65r_1684763831_m.jpg"

@@ -1,5 +1,6 @@
 package com.lucasnvs.cadmo.ui.components
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -7,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -49,18 +51,29 @@ fun SectionProduct(
                 alignment = Alignment.CenterHorizontally
             )
         ) {
-            items(items = products, itemContent = {
-                Product(modifier = modifier, product = it,
+            items(products.size) { index ->
+                Product(
+                    modifier = modifier,
+                    product = products[index],
                     onCartButtonClick = {
-                        viewModel.onItemCartClicked(it)
-                    })
-            })
+                        viewModel.onItemCartClicked( sectionKey = name, index)
+                    }
+                )
+            }
         }
     }
 }
 
+@SuppressLint("UnrememberedMutableState")
 @Preview(showBackground = true)
 @Composable
 fun SectionProductPreview() {
-//    SectionProduct(modifier = , name = , products = , viewModel = )
+//    SectionProduct(
+//        modifier = Modifier,
+//        name = "Seção",
+//        products = listOf(
+//            HomeViewModel.HomeItemUiState(mutableStateOf(false), "Item", "20.00", "asd"),
+//            HomeViewModel.HomeItemUiState(mutableStateOf(false), "Item", "20.00", "asd"),
+//        )
+//    )
 }

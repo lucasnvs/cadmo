@@ -14,17 +14,11 @@ private const val BASE_URL =
 
 private val json = Json { ignoreUnknownKeys = true }
 
-/**
- * Use the Retrofit builder to build a retrofit object using a kotlinx.serialization converter
- */
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
     .baseUrl(BASE_URL)
     .build()
 
-/**
- * Retrofit service object for creating api calls
- */
 @Serializable
 data class ProductResponse(
     @SerialName("produtos")
@@ -36,9 +30,6 @@ interface KabumApiService {
     suspend fun getProducts(): ProductResponse
 }
 
-/**
- * A public Api object that exposes the lazy-initialized Retrofit service
- */
 object KabumApi {
     val retrofitService: KabumApiService by lazy {
         retrofit.create(KabumApiService::class.java)

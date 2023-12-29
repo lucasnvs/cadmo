@@ -1,5 +1,6 @@
 package com.lucasnvs.cadmo.ui.viewmodel
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -8,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.lucasnvs.cadmo.data.NetworkKabumProductsRepository
 import com.lucasnvs.cadmo.model.Product
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -16,7 +18,7 @@ class HomeViewModel(
 ) : ViewModel() {
 
     data class HomeItemUiState(
-        val isOnCart: Boolean = false,
+        val isOnCart: MutableState<Boolean> = mutableStateOf(false),
         val name: String,
         val price: String,
         val img: String,
@@ -25,10 +27,10 @@ class HomeViewModel(
     data class HomeUiState(
         var isFetchingSections: Boolean = false,
         val isSignedIn: Boolean = false,
-        val sections: Map<String, List<HomeItemUiState>> = mutableMapOf()
+        val sections: Map<String, List<HomeItemUiState>> = mutableMapOf(),
     )
 
-    val HomeUiState.canAddToCartProduct: Boolean get() = isSignedIn
+//    val HomeUiState.canAddToCartProduct: Boolean get() = isSignedIn
 
     var uiState by mutableStateOf(HomeUiState())
         private set
@@ -37,8 +39,21 @@ class HomeViewModel(
         fetchSections()
     }
 
-    fun onItemCartClicked(item: HomeItemUiState) {
+    fun onItemCartClicked(sectionKey: String, index: Int) {
+        val currentSections = uiState.sections.toMutableMap()
 
+        if (!currentSections.containsKey(sectionKey)) return
+
+        val itemList = currentSections[sectionKey] ?: return
+
+        if (index !in itemList.indices) return
+
+        val updatedItemList = itemList.toMutableList()
+        updatedItemList[index] = updatedItemList[index].copy(isOnCart = mutableStateOf(!updatedItemList[index].isOnCart.value))
+
+        currentSections[sectionKey] = updatedItemList
+
+        uiState = uiState.copy(sections = currentSections)
     }
 
     private fun mapProduct(product: Product): HomeItemUiState {
@@ -49,7 +64,7 @@ class HomeViewModel(
         )
     }
 
-    fun convertProductMapToHomeItemUiStateMap(productMap: Map<String, List<Product>>): Map<String, List<HomeItemUiState>> {
+    private fun convertProductMapToHomeItemUiStateMap(productMap: Map<String, List<Product>>): Map<String, List<HomeItemUiState>> {
         val homeItemUiStateMap = mutableMapOf<String, List<HomeItemUiState>>()
 
         for ((key, productList) in productMap) {
@@ -72,9 +87,11 @@ class HomeViewModel(
             try {
                 val sections = repository.getSections()
 
+                delay(2000)
                 uiState = uiState.copy(
                     isFetchingSections = false,
                     sections = convertProductMapToHomeItemUiStateMap(sections),
+
                 )
 
             } catch (ioe: IOException) {

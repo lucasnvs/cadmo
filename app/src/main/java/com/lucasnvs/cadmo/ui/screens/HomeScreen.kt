@@ -40,7 +40,6 @@ fun HomeScreen(
     appState: CadmoAppState,
     viewModel: HomeViewModel = viewModel(),
 ) {
-    val sections by viewModel.uiState.sections.st
 
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -80,7 +79,7 @@ fun HomeScreen(
         },
 
     ) { innerPadding ->
-        if(viewModel.uiState.isFetchingProducts) {
+        if(viewModel.uiState.isFetchingSections) {
             Loading(modifier, innerPadding)
         } else {
             Content(innerPadding = innerPadding, viewModel = viewModel)
