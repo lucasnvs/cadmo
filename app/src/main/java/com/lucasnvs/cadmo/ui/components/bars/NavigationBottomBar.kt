@@ -47,7 +47,6 @@ fun NavigationBottomBar(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
             ) {
                 TransparentIconButton(modifier.weight(1f), icon = Icons.Filled.Home, enabled = isInHome, name = "Home", onClick = onNavigateToHome)
                 TransparentIconButton(modifier.weight(1f), icon = Icons.Filled.List, enabled = isInDept, name = "Departamentos", onClick = onNavigateToDepartament)
