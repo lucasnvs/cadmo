@@ -10,6 +10,10 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.rounded.Favorite
+import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.List
+import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -51,10 +55,10 @@ fun NavigationBottomBar(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                TransparentIconButton(modifier.weight(1f), icon = Icons.Filled.Home, enabled = isInHome, name = "Home", onClick = onNavigateToHome)
+                TransparentIconButton(modifier.weight(1f), icon = Icons.Rounded.Home, enabled = isInHome, name = "Home", onClick = onNavigateToHome)
                 TransparentIconButton(modifier.weight(1f), icon = Icons.Filled.List, enabled = isInDept, name = "Departamentos", onClick = onNavigateToDepartament)
-                TransparentIconButton(modifier.weight(1f), icon = Icons.Filled.Favorite, enabled = isInFavorite, name = "Favoritos", onClick = onNavigateToFavorite)
-                TransparentIconButton(modifier.weight(1f), icon = Icons.Filled.Person, enabled = isInProfile, name = "Perfil", onClick = onNavigateToProfile)
+                TransparentIconButton(modifier.weight(1f), icon = Icons.Rounded.Favorite, enabled = isInFavorite, name = "Favoritos", onClick = onNavigateToFavorite)
+                TransparentIconButton(modifier.weight(1f), icon = Icons.Rounded.Person, enabled = isInProfile, name = "Perfil", onClick = onNavigateToProfile)
             }
         }
     )

@@ -16,6 +16,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.rounded.Favorite
+import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -48,8 +51,9 @@ fun Product(modifier: Modifier, product: HomeViewModel.HomeItemUiState, onCartBu
 
     }
 
+    val isOnCart = product.isOnCart.value
     var cartIconColor = LightGrayColor
-    if(product.isOnCart.value) cartIconColor = PrincipalColor
+    if(isOnCart) cartIconColor = PrincipalColor
 
     val painter = rememberAsyncImagePainter(product.img)
 
@@ -82,7 +86,7 @@ fun Product(modifier: Modifier, product: HomeViewModel.HomeItemUiState, onCartBu
                     modifier = modifier.size(25.dp)
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.Favorite,
+                        imageVector = if(isOnCart) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,
                         contentDescription = "Carrinho",
                         modifier = modifier.size(22.dp)
                     )
