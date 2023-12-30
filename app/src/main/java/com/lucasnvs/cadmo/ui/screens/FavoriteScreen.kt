@@ -28,7 +28,7 @@ fun FavoriteScreen(
     Scaffold(
         topBar = {
             MainTopBar(
-                title = { Text(text = "Meu Perfil", fontSize = 19.sp) },
+                title = { Text(text = "Favoritos", fontSize = 19.sp) },
                 actionIcon = {
                     Icon(
                         imageVector = Icons.Filled.ShoppingCart,
