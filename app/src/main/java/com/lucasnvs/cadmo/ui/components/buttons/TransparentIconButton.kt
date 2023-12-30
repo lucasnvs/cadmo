@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.ButtonDefaults
@@ -52,23 +53,20 @@ fun TransparentIconButton(
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(
-                space = 2.dp,
-                alignment = Alignment.CenterVertically
-            )
+            verticalArrangement = Arrangement.Center
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = "Ir para $name",
-                modifier = modifier.size(30.dp)
+                modifier = modifier.sizeIn(minHeight = 35.dp, maxHeight = 35.dp, minWidth = 35.dp, maxWidth = 35.dp)
             )
             Text(
                 text = name,
                 textAlign = TextAlign.Center,
                 style = TextStyle(
-                    fontSize = 12.sp,
+                    fontSize = 13.sp,
                     fontFamily = FontFamily.SansSerif,
-                    fontWeight = FontWeight(600),
+                    fontWeight = if (enabled) FontWeight(600) else FontWeight(500),
                 )
             )
         }
