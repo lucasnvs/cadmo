@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -81,9 +82,9 @@ fun Product(modifier: Modifier, product: HomeViewModel.HomeItemUiState, onCartBu
                     modifier = modifier.size(25.dp)
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.Add,
+                        imageVector = Icons.Filled.Favorite,
                         contentDescription = "Carrinho",
-                        modifier = modifier.size(25.dp)
+                        modifier = modifier.size(22.dp)
                     )
                 }
             }
