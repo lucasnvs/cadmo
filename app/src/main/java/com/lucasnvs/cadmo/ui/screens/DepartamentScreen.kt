@@ -70,7 +70,7 @@ fun DepartamentScreen(
             NavigationBottomBar(
                 currentDestination = appState.currentDestination,
                 onNavigateToHome = { appState.popBackStack(route = Screen.HomeScreen.route, inclusive = false, saveState = false) },
-                onNavigateToDepartament = {},
+                onNavigateToFavorite = {appState.navigate(Screen.FavoriteScreen)},
                 onNavigateToProfile = {appState.navigate(Screen.ProfileScreen)}
             )
         },

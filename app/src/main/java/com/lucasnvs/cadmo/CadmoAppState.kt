@@ -14,7 +14,6 @@ class CadmoAppState(
     val currentDestination: NavDestination?
         @Composable get() = navController.currentBackStackEntryAsState().value?.destination
 
-
     fun navigate(destination: Screen) {
         navController.navigate(destination.route) {
             popUpTo(Screen.HomeScreen.route)

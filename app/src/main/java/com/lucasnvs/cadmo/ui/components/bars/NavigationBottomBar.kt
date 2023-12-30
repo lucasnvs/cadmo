@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
@@ -23,19 +24,21 @@ import com.lucasnvs.cadmo.ui.theme.PrincipalColor
 fun NavigationBottomBar(
     modifier: Modifier = Modifier,
     currentDestination: NavDestination?,
-    onNavigateToHome: () -> Unit,
-    onNavigateToProfile: () -> Unit,
-    onNavigateToDepartament: () -> Unit
+    onNavigateToHome: () -> Unit = {},
+    onNavigateToProfile: () -> Unit = {},
+    onNavigateToFavorite: () -> Unit = {},
+    onNavigateToDepartament: () -> Unit = {}
 ) {
 
     var isInHome: Boolean = false
     var isInDept: Boolean = false
     var isInProfile: Boolean = false
-    var isInCart: Boolean = false
+    var isInFavorite: Boolean = false
 
     when(currentDestination?.route) {
         Screen.HomeScreen.route -> isInHome = true
         Screen.DepartamentScreen.route -> isInDept = true
+        Screen.FavoriteScreen.route -> isInFavorite = true
         Screen.ProfileScreen.route -> isInProfile = true
     }
 
@@ -50,7 +53,7 @@ fun NavigationBottomBar(
             ) {
                 TransparentIconButton(modifier.weight(1f), icon = Icons.Filled.Home, enabled = isInHome, name = "Home", onClick = onNavigateToHome)
                 TransparentIconButton(modifier.weight(1f), icon = Icons.Filled.List, enabled = isInDept, name = "Departamentos", onClick = onNavigateToDepartament)
-                TransparentIconButton(modifier.weight(1f), icon = Icons.Filled.ShoppingCart, enabled = isInCart, name = "Carrinho", onClick = { })
+                TransparentIconButton(modifier.weight(1f), icon = Icons.Filled.Favorite, enabled = isInFavorite, name = "Favoritos", onClick = onNavigateToFavorite)
                 TransparentIconButton(modifier.weight(1f), icon = Icons.Filled.Person, enabled = isInProfile, name = "Perfil", onClick = onNavigateToProfile)
             }
         }
@@ -65,6 +68,7 @@ fun NavigationBottomBarPreview() {
         currentDestination = NavDestination(Screen.HomeScreen.route),
         onNavigateToHome = { },
         onNavigateToProfile = { },
+        onNavigateToFavorite = { },
         onNavigateToDepartament = {}
     )
 }

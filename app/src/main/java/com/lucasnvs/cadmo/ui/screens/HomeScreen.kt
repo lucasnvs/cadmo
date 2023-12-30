@@ -54,11 +54,13 @@ fun HomeScreen(
         topBar = {
             MainTopBar(
                 title = { SearchTextField(modifier = modifier.fillMaxWidth(0.95F)) },
-                actionIcon = { Icon(
-                    imageVector = Icons.Filled.ShoppingCart,
-                    contentDescription = "Carrinho",
-                    modifier = modifier.size(35.dp)
-                ) },
+                actionIcon = {
+                    Icon(
+                        imageVector = Icons.Filled.ShoppingCart,
+                        contentDescription = "Carrinho",
+                        modifier = modifier.size(35.dp)
+                    )
+                },
                 actionOnClick = {
                 if(viewModel.uiState.isSignedIn) {
                     scope.launch {
@@ -76,7 +78,7 @@ fun HomeScreen(
                 currentDestination = appState.currentDestination,
                 onNavigateToProfile = { appState.navigate(Screen.ProfileScreen) },
                 onNavigateToDepartament = { appState.navigate(Screen.DepartamentScreen) },
-                onNavigateToHome = {}
+                onNavigateToFavorite = {appState.navigate(Screen.FavoriteScreen)},
             )
         },
 

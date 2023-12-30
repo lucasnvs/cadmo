@@ -26,7 +26,7 @@ fun ProfileScreen(
                 currentDestination = appState.currentDestination,
                 onNavigateToHome = { appState.popBackStack() },
                 onNavigateToDepartament = { appState.navigate(Screen.DepartamentScreen) },
-                onNavigateToProfile = {}
+                onNavigateToFavorite = { appState.navigate(Screen.FavoriteScreen) },
             )
         },
         ) { innerPadding ->
