@@ -62,7 +62,7 @@ fun HomeScreen(
                     )
                 },
                 actionOnClick = {
-                if(viewModel.uiState.isSignedIn) {
+                if(appState.isSignedIn) {
                     scope.launch {
                         snackbarHostState.showSnackbar(message = "Está logado!", duration = SnackbarDuration.Short)
                     }

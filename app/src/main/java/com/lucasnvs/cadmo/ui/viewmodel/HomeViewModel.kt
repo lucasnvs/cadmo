@@ -26,7 +26,6 @@ class HomeViewModel(
 
     data class HomeUiState(
         var isFetchingSections: Boolean = false,
-        val isSignedIn: Boolean = false,
         val sections: Map<String, List<HomeItemUiState>> = mutableMapOf(),
     )
 
