@@ -1,10 +1,9 @@
 package com.lucasnvs.cadmo.ui.screens
 
-import android.widget.Space
+import android.graphics.drawable.Icon
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,40 +15,40 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import com.lucasnvs.cadmo.CadmoAppState
+import com.lucasnvs.cadmo.ui.components.ListRedirectOption
 import com.lucasnvs.cadmo.ui.components.SearchTextField
 import com.lucasnvs.cadmo.ui.components.bars.NavigationBottomBar
 import com.lucasnvs.cadmo.ui.components.bars.MainTopBar
 import com.lucasnvs.cadmo.ui.theme.CadmoTheme
 
-val testlist = listOf(
-    "Hardware",
-    "Periféricos",
-    "Mobile",
-    "Casa Inteligente",
-    "Games",
-    "Automação",
-    "Segurança",
-    "Áudio",
-    "Decoração",
-    "Acessórios",
+val testlist: List<Pair<String, ImageVector?>> = listOf(
+    "Hardware" to null,
+    "Periféricos" to null,
+    "Mobile" to null,
+    "Casa Inteligente" to null,
+    "Games" to null,
+    "Automação" to null,
+    "Segurança" to null,
+    "Áudio" to null,
+    "Decoração" to null,
+    "Acessórios" to null,
 )
-
 @Composable
 fun DepartamentScreen(
     modifier: Modifier = Modifier,
@@ -85,7 +84,7 @@ fun DepartamentScreen(
         ) {
             Text(text = "DEPARTAMENTOS", fontSize = 21.sp)
             Spacer(modifier = modifier.height(10.dp))
-            ListItem(items = testlist)
+            ListRedirectOption(items = testlist)
         }
     }
 }
@@ -94,51 +93,4 @@ fun DepartamentScreen(
 @Composable
 fun DepartamentScreenPreview() {
     DepartamentScreen(appState = CadmoAppState( navController = rememberNavController() ))
-}
-
-@Composable
-fun Item(
-    modifier: Modifier = Modifier,
-    name: String,
-    onClick: () -> Unit = {}
-) {
-    Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .fillMaxWidth()
-            .background(Color.White)
-            .clickable { onClick() }
-            .padding(horizontal = 10.dp, vertical = 15.dp)
-
-    ) {
-        Text(text = name)
-        Icon(imageVector = Icons.Filled.KeyboardArrowRight, contentDescription = "Abrir")
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ItemPreview() {
-    CadmoTheme {
-        Item(name = "Hardware")
-    }
-}
-
-@Composable
-fun ListItem(items: List<String>) {
-    LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(1.dp)
-    ) {
-        items(items) {
-            Item(name = it)
-        }
-    }
-}
-@Preview(showBackground = true)
-@Composable
-fun ListItemPreview() {
-    CadmoTheme {
-        ListItem(testlist)
-    }
 }
