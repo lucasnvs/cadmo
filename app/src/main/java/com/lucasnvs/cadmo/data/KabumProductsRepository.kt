@@ -47,8 +47,8 @@ class NetworkKabumProductsRepository : KabumProductsRepository {
         }
 
         return listOf(
-            DataSection(key = "É openbox", list = listIsOpenBox),
-            DataSection(key = "Não é openbox", list = listNotIsOpenBox)
+            DataSection(key = "Mais procurados", list = listIsOpenBox),
+            DataSection(key = "DESCONTOS DA SEMANA", list = listNotIsOpenBox)
         )
     }
 
