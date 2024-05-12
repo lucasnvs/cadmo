@@ -10,7 +10,7 @@ import com.lucasnvs.cadmo.ui.shared.Screen
 @Stable
 class CadmoAppState(
     val navController: NavHostController,
-    val isSignedIn: Boolean = true,
+    val isSignedIn: Boolean = false,
 ) {
     val currentDestination: NavDestination?
         @Composable get() = navController.currentBackStackEntryAsState().value?.destination

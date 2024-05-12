@@ -30,12 +30,14 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.lucasnvs.cadmo.ui.CadmoAppState
 import com.lucasnvs.cadmo.R
 import com.lucasnvs.cadmo.ui.components.ListRedirectOption
 import com.lucasnvs.cadmo.ui.components.bars.NavigationBottomBar
 import com.lucasnvs.cadmo.ui.components.bars.MainTopBar
+import com.lucasnvs.cadmo.ui.home.HomeViewModel
 import com.lucasnvs.cadmo.ui.shared.Screen
 import com.lucasnvs.cadmo.ui.theme.CadmoTheme
 import com.lucasnvs.cadmo.ui.theme.LightGrayColor
@@ -45,7 +47,8 @@ import com.lucasnvs.cadmo.ui.theme.PrincipalColor
 fun ProfileScreen(
     modifier: Modifier = Modifier,
     appState: CadmoAppState,
-) {
+    viewModel: ProfileViewModel = viewModel(),
+    ) {
     Scaffold(
         topBar = {
             MainTopBar(title = { Text(text = "Meu Perfil", fontSize = 19.sp) })
@@ -60,7 +63,10 @@ fun ProfileScreen(
         },
         ) { innerPadding ->
         if(!appState.isSignedIn) {
-            SignIn(modifier.padding(innerPadding))
+            when(viewModel.uiState.currentUnsignedScreen) {
+                UnsignedScreen.LoginScreen -> Login(modifier.padding(innerPadding), onSwitchUnsignedScreen = { viewModel.onSwitchUnsignedScreen() })
+                UnsignedScreen.SignIn -> SignIn(modifier.padding(innerPadding), onSwitchUnsignedScreen = { viewModel.onSwitchUnsignedScreen() })
+            }
         } else {
             Profile(modifier = modifier.padding(innerPadding))
         }
@@ -82,7 +88,10 @@ fun Profile(modifier: Modifier = Modifier) {
     }
 }
 @Composable
-fun Login(modifier: Modifier = Modifier) {
+fun Login(
+    modifier: Modifier = Modifier,
+    onSwitchUnsignedScreen: () -> Unit
+) {
     val modFullWidth = Modifier.fillMaxWidth()
 
     Column(
@@ -125,14 +134,16 @@ fun Login(modifier: Modifier = Modifier) {
                 color = PrincipalColor,
                 textDecoration = TextDecoration.Underline,
                 letterSpacing = 1.sp,
-                modifier = Modifier.clickable {  }
+                modifier = Modifier.clickable { onSwitchUnsignedScreen() }
             )
         }
     }
 }
-
 @Composable
-fun SignIn(modifier: Modifier = Modifier) {
+fun SignIn(
+    modifier: Modifier = Modifier,
+    onSwitchUnsignedScreen: () -> Unit
+) {
     val modFullWidth = Modifier.fillMaxWidth()
 
     Column(
@@ -193,7 +204,7 @@ fun SignIn(modifier: Modifier = Modifier) {
                 color = PrincipalColor,
                 textDecoration = TextDecoration.Underline,
                 letterSpacing = 1.sp,
-                modifier = Modifier.clickable {  }
+                modifier = Modifier.clickable { onSwitchUnsignedScreen() }
             )
         }
     }
@@ -219,7 +230,7 @@ fun ProfilePreview() {
 @Composable
 fun LoginPreview() {
     CadmoTheme {
-        Login()
+        Login( onSwitchUnsignedScreen = {})
     }
 }
 
@@ -227,6 +238,6 @@ fun LoginPreview() {
 @Composable
 fun SignInPreview() {
     CadmoTheme {
-        SignIn()
+        SignIn(onSwitchUnsignedScreen = {})
     }
 }
