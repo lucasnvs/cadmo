@@ -1,17 +1,17 @@
-package com.lucasnvs.cadmo
+package com.lucasnvs.cadmo.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.lucasnvs.cadmo.ui.screens.Screen
+import com.lucasnvs.cadmo.ui.shared.Screen
 
 @Stable
 class CadmoAppState(
     val navController: NavHostController,
-    val isSignedIn: Boolean = false,
-    ) {
+    val isSignedIn: Boolean = true,
+) {
     val currentDestination: NavDestination?
         @Composable get() = navController.currentBackStackEntryAsState().value?.destination
 

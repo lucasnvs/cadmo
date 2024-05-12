@@ -14,9 +14,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material3.Button
@@ -42,7 +39,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.lucasnvs.cadmo.ui.theme.LightGrayColor
 import com.lucasnvs.cadmo.ui.theme.PrincipalColor
-import com.lucasnvs.cadmo.ui.viewmodel.HomeViewModel
+import com.lucasnvs.cadmo.ui.home.HomeViewModel
 
 @Composable
 fun Product(modifier: Modifier, product: HomeViewModel.HomeItemUiState, onCartButtonClick: () -> Unit) {

@@ -1,4 +1,4 @@
-package com.lucasnvs.cadmo.ui.screens
+package com.lucasnvs.cadmo.ui.favorite
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -14,10 +14,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
-import com.lucasnvs.cadmo.CadmoAppState
-import com.lucasnvs.cadmo.Navigation
+import com.lucasnvs.cadmo.ui.CadmoAppState
 import com.lucasnvs.cadmo.ui.components.bars.MainTopBar
 import com.lucasnvs.cadmo.ui.components.bars.NavigationBottomBar
+import com.lucasnvs.cadmo.ui.shared.Screen
 import com.lucasnvs.cadmo.ui.theme.CadmoTheme
 
 @Composable

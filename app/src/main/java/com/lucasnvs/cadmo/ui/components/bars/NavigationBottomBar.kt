@@ -3,25 +3,18 @@ package com.lucasnvs.cadmo.ui.components.bars
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.rounded.List
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import com.lucasnvs.cadmo.ui.components.buttons.TransparentIconButton
-import com.lucasnvs.cadmo.ui.screens.Screen
+import com.lucasnvs.cadmo.ui.shared.Screen
 import com.lucasnvs.cadmo.ui.theme.PrincipalColor
 
 @Composable

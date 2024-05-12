@@ -2,7 +2,6 @@ package com.lucasnvs.cadmo.data
 
 import com.lucasnvs.cadmo.model.Product
 import com.lucasnvs.cadmo.network.KabumApi
-import com.lucasnvs.cadmo.ui.viewmodel.HomeViewModel
 
 
 data class DataSection(

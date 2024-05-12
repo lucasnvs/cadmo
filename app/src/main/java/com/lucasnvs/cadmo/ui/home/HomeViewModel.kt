@@ -1,4 +1,4 @@
-package com.lucasnvs.cadmo.ui.viewmodel
+package com.lucasnvs.cadmo.ui.home
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue

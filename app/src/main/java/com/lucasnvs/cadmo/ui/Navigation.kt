@@ -1,16 +1,16 @@
-package com.lucasnvs.cadmo
+package com.lucasnvs.cadmo.ui
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.lucasnvs.cadmo.ui.screens.DepartamentScreen
-import com.lucasnvs.cadmo.ui.screens.FavoriteScreen
-import com.lucasnvs.cadmo.ui.screens.HomeScreen
-import com.lucasnvs.cadmo.ui.screens.ProfileScreen
-import com.lucasnvs.cadmo.ui.screens.Screen
+import com.lucasnvs.cadmo.ui.CadmoAppState
+import com.lucasnvs.cadmo.ui.departament.DepartamentScreen
+import com.lucasnvs.cadmo.ui.favorite.FavoriteScreen
+import com.lucasnvs.cadmo.ui.home.HomeScreen
+import com.lucasnvs.cadmo.ui.profile.ProfileScreen
+import com.lucasnvs.cadmo.ui.shared.Screen
 
 @Composable
 fun Navigation() {

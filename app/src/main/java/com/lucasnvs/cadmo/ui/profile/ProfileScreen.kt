@@ -1,4 +1,4 @@
-package com.lucasnvs.cadmo.ui.screens
+package com.lucasnvs.cadmo.ui.profile
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,6 +12,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.OutlinedTextField
@@ -20,21 +23,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
-import com.lucasnvs.cadmo.CadmoAppState
+import com.lucasnvs.cadmo.ui.CadmoAppState
+import com.lucasnvs.cadmo.R
+import com.lucasnvs.cadmo.ui.components.ListRedirectOption
 import com.lucasnvs.cadmo.ui.components.bars.NavigationBottomBar
 import com.lucasnvs.cadmo.ui.components.bars.MainTopBar
+import com.lucasnvs.cadmo.ui.shared.Screen
 import com.lucasnvs.cadmo.ui.theme.CadmoTheme
 import com.lucasnvs.cadmo.ui.theme.LightGrayColor
 import com.lucasnvs.cadmo.ui.theme.PrincipalColor
@@ -60,14 +62,25 @@ fun ProfileScreen(
         if(!appState.isSignedIn) {
             SignIn(modifier.padding(innerPadding))
         } else {
-            Box(modifier = modifier.padding(innerPadding)) {
-                Text(text = "Olá você está no perfil")
-            }
+            Profile(modifier = modifier.padding(innerPadding))
         }
     }
 
 }
 
+@Composable
+fun Profile(modifier: Modifier = Modifier) {
+    val iconShoppingBasket = ImageVector.vectorResource(id = R.drawable.baseline_shopping_basket_24)
+    val profileOptions = listOf(
+        "Meus Pedidos" to iconShoppingBasket,
+        "Favoritos" to Icons.Filled.Favorite,
+        "Configurações" to Icons.Filled.Settings
+    )
+
+    Box(modifier = modifier) {
+        ListRedirectOption(items = profileOptions)
+    }
+}
 @Composable
 fun Login(modifier: Modifier = Modifier) {
     val modFullWidth = Modifier.fillMaxWidth()
@@ -189,8 +202,19 @@ fun SignIn(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun ProfileScreenPreview() {
-    ProfileScreen(appState = CadmoAppState(rememberNavController()))
+    CadmoTheme {
+        ProfileScreen(appState = CadmoAppState(rememberNavController()))
+    }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun ProfilePreview() {
+    CadmoTheme {
+        Profile()
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun LoginPreview() {
