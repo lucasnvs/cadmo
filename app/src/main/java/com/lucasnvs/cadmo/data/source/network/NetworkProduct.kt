@@ -1,10 +1,10 @@
-package com.lucasnvs.cadmo.model
+package com.lucasnvs.cadmo.data.source.network
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable()
-data class Product(
+data class  NetworkProduct(
     @SerialName(value = "codigo")
     val id: Int,
     @SerialName(value = "nome")

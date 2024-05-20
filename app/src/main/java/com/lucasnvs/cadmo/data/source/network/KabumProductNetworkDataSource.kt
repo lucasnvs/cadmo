@@ -1,29 +1,28 @@
-package com.lucasnvs.cadmo.data
+package com.lucasnvs.cadmo.data.source.network
 
-import com.lucasnvs.cadmo.model.Product
-import com.lucasnvs.cadmo.network.KabumApi
-
+import javax.inject.Inject
 
 data class DataSection(
     val key: String,
-    val list: List<Product>
+    val list: List<NetworkProduct>
 )
 
-interface KabumProductsRepository {
-    suspend fun getKabumProducts(): List<Product>
-}
+class KabumProductNetworkDataSource : NetworkDataSource {
 
-class NetworkKabumProductsRepository : KabumProductsRepository {
-    override suspend fun getKabumProducts(): List<Product> {
+    override suspend fun loadProducts(): List<NetworkProduct> {
         return KabumApi.retrofitService.getProducts().produtos
     }
 
-    suspend fun getSections(): Map<String, List<Product>>  {
-        val products = getKabumProducts()
+    override suspend fun saveProducts(tasks: List<NetworkProduct>) {
+        TODO("Not yet implemented")
+    }
+
+    suspend fun getSections(): Map<String, List<NetworkProduct>>  {
+        val products = loadProducts()
         val sections = sectionIsOpenBox(products)
 
 
-        val mapSections = mutableMapOf<String, List<Product>>()
+        val mapSections = mutableMapOf<String, List<NetworkProduct>>()
         for (section in sections) {
             mapSections[section.key] = section.list
         }
@@ -31,10 +30,10 @@ class NetworkKabumProductsRepository : KabumProductsRepository {
         return mapSections
     }
 
-    private fun sectionIsOpenBox(produtos: List<Product>): List<DataSection> {
+    private fun sectionIsOpenBox(produtos: List<NetworkProduct>): List<DataSection> {
 
-        var listIsOpenBox = mutableListOf<Product>()
-        var listNotIsOpenBox = mutableListOf<Product>()
+        var listIsOpenBox = mutableListOf<NetworkProduct>()
+        var listNotIsOpenBox = mutableListOf<NetworkProduct>()
 
         for (produto in produtos) {
             val check = produto.isOpenBox
@@ -51,5 +50,4 @@ class NetworkKabumProductsRepository : KabumProductsRepository {
             DataSection(key = "DESCONTOS DA SEMANA", list = listNotIsOpenBox)
         )
     }
-
 }

@@ -1,7 +1,6 @@
-package com.lucasnvs.cadmo.network
+package com.lucasnvs.cadmo.data.source.network
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.lucasnvs.cadmo.model.Product
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -22,7 +21,7 @@ private val retrofit = Retrofit.Builder()
 @Serializable
 data class ProductResponse(
     @SerialName("produtos")
-    val produtos: List<Product>
+    val produtos: List<NetworkProduct>
 )
 
 interface KabumApiService {
