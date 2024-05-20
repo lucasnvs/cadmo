@@ -8,7 +8,7 @@ Linguagem: Kotlin
 
 Estrutura: MVVM
 
-## Technologies
+## Tecnologias
 
 - Jetpack Compose
 - Retrofit
