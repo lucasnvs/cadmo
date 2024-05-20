@@ -1,9 +1,12 @@
 package com.lucasnvs.cadmo.data
 
+import com.lucasnvs.cadmo.data.source.network.NetworkProduct
+
 interface ProductRepository {
 
     suspend fun getKabumProducts(): List<Product>
 
+    suspend fun getSections(): Map<String, List<Product>>
 //    fun getTasksStream(): Flow<List<Task>>
 //
 //    suspend fun getTasks(forceUpdate: Boolean = false): List<Task>
