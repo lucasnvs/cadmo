@@ -5,10 +5,11 @@ import com.lucasnvs.cadmo.data.source.network.DataSection
 import com.lucasnvs.cadmo.data.source.network.NetworkDataSource
 import com.lucasnvs.cadmo.data.source.network.NetworkProduct
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class DefaultProductRepository @Inject constructor(
-    val networkDataSource: NetworkDataSource,
-    val localDataSource: ProductDAO
+    private val networkDataSource: NetworkDataSource,
     ) : ProductRepository {
 
     override suspend fun getKabumProducts(): List<Product> {

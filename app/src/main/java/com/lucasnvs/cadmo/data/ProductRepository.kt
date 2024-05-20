@@ -1,7 +1,5 @@
 package com.lucasnvs.cadmo.data
 
-import com.lucasnvs.cadmo.data.source.network.NetworkProduct
-
 interface ProductRepository {
 
     suspend fun getKabumProducts(): List<Product>

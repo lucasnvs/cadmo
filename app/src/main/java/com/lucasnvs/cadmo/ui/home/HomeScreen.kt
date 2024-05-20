@@ -26,7 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.lucasnvs.cadmo.ui.CadmoAppState
 import com.lucasnvs.cadmo.ui.components.SearchTextField
 import com.lucasnvs.cadmo.ui.components.SectionProduct
@@ -40,7 +40,7 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     modifier: Modifier = Modifier,
     appState: CadmoAppState,
-    viewModel: HomeViewModel = viewModel(),
+    viewModel: HomeViewModel = hiltViewModel(),
 ) {
 
     val scope = rememberCoroutineScope()
@@ -126,8 +126,8 @@ fun Loading(modifier: Modifier, innerPadding: PaddingValues) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
-        .padding(innerPadding)
-        .fillMaxSize()
+            .padding(innerPadding)
+            .fillMaxSize()
     ) {
         CircularProgressIndicator()
     }

@@ -9,12 +9,7 @@ import com.lucasnvs.cadmo.data.source.local.LocalProduct
 
 @Dao
 interface ProductDAO {
-    @get:Query("SELECT * FROM product")
-    val all: List<Any?>?
+    @Query("SELECT * FROM product")
+    suspend fun getAll(): List<LocalProduct>
 
-    @Insert
-    fun insert(vararg contatos: LocalProduct?)
-
-    @Delete
-    fun delete(contato: LocalProduct?)
 }

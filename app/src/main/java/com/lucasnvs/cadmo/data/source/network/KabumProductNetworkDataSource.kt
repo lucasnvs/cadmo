@@ -7,7 +7,7 @@ data class DataSection(
     val list: List<NetworkProduct>
 )
 
-class KabumProductNetworkDataSource : NetworkDataSource {
+class KabumProductNetworkDataSource @Inject constructor() : NetworkDataSource {
 
     override suspend fun loadProducts(): List<NetworkProduct> {
         return KabumApi.retrofitService.getProducts().produtos
