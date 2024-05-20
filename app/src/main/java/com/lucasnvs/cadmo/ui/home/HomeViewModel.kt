@@ -6,15 +6,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lucasnvs.cadmo.data.NetworkKabumProductsRepository
-import com.lucasnvs.cadmo.model.Product
+import com.lucasnvs.cadmo.data.Product
+import com.lucasnvs.cadmo.data.ProductRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.IOException
+import javax.inject.Inject
 
-class HomeViewModel(
-    private val repository: NetworkKabumProductsRepository = NetworkKabumProductsRepository(),
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val repository: ProductRepository,
 ) : ViewModel() {
 
     data class HomeItemUiState(
