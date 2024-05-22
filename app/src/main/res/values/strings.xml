@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Cadmo</string>
+    <string name="loading_favorites_error">Erro ao carregar produtos favoritos.</string>
 </resources>
