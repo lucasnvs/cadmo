@@ -37,7 +37,6 @@ import com.lucasnvs.cadmo.R
 import com.lucasnvs.cadmo.ui.components.ListRedirectOption
 import com.lucasnvs.cadmo.ui.components.bars.NavigationBottomBar
 import com.lucasnvs.cadmo.ui.components.bars.MainTopBar
-import com.lucasnvs.cadmo.ui.home.HomeViewModel
 import com.lucasnvs.cadmo.ui.shared.Screen
 import com.lucasnvs.cadmo.ui.theme.CadmoTheme
 import com.lucasnvs.cadmo.ui.theme.LightGrayColor
@@ -65,7 +64,7 @@ fun ProfileScreen(
         if(!appState.isSignedIn) {
             when(viewModel.uiState.currentUnsignedScreen) {
                 UnsignedScreen.LoginScreen -> Login(modifier.padding(innerPadding), onSwitchUnsignedScreen = { viewModel.onSwitchUnsignedScreen() })
-                UnsignedScreen.SignIn -> SignIn(modifier.padding(innerPadding), onSwitchUnsignedScreen = { viewModel.onSwitchUnsignedScreen() })
+                UnsignedScreen.SigninScreen -> SignIn(modifier.padding(innerPadding), onSwitchUnsignedScreen = { viewModel.onSwitchUnsignedScreen() })
             }
         } else {
             Profile(modifier = modifier.padding(innerPadding))
