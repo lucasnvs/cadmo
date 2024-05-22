@@ -79,7 +79,6 @@ class ProductRepositoryImpl @Inject constructor(
 
     override suspend fun addToFavorites(product: Product) {
         localDataSource.upsertFavorite(product.toLocal())
-        Log.d("DATABASE", "Produto de id: ${product.id} inserido com sucesso!")
     }
 
     override suspend fun deleteAllFavorites(product: Product) {
