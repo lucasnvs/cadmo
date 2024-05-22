@@ -1,19 +1,19 @@
 package com.lucasnvs.cadmo.domain.local
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Upsert
 import androidx.room.Query
 import com.lucasnvs.cadmo.data.source.local.LocalProduct
+import kotlinx.coroutines.flow.Flow
 
 
 @Dao
 interface ProductDAO {
 
     @Query("SELECT * FROM favorites")
-    fun observeAll(): LiveData<List<LocalProduct>>
+    fun observeAll(): Flow<List<LocalProduct>>
     @Query("SELECT * FROM favorites WHERE id = :favoriteId")
-    fun observeById(favoriteId: String): LiveData<LocalProduct>
+    fun observeById(favoriteId: String): Flow<LocalProduct>
     @Query("SELECT * FROM favorites")
     suspend fun getAllFavorites(): List<LocalProduct>
     @Query("SELECT * FROM favorites WHERE id = :id")
