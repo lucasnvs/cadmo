@@ -37,16 +37,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import com.lucasnvs.cadmo.ui.components.buttons.DefaultButton
 import com.lucasnvs.cadmo.ui.theme.LightGrayColor
 import com.lucasnvs.cadmo.ui.theme.PrincipalColor
 import com.lucasnvs.cadmo.ui.shared.ProductItemState
 
 @Composable
-fun Product(modifier: Modifier, product: ProductItemState, onFavoriteButtonClick: () -> Unit) {
-
-    fun handleClickBuyButton() {
-
-    }
+fun Product(
+    modifier: Modifier,
+    product: ProductItemState,
+    onBuyButtonClick: () -> Unit,
+    onFavoriteButtonClick: () -> Unit,
+) {
 
     val isOnCart = product.isFavorite.value
     val cartIconColor = if(isOnCart) PrincipalColor else LightGrayColor
@@ -56,7 +58,6 @@ fun Product(modifier: Modifier, product: ProductItemState, onFavoriteButtonClick
     Box(modifier = modifier
         .shadow(elevation = 3.dp)
         .width(260.dp)
-        .height(165.dp)
         .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 2.dp))
         .padding(5.dp)
     ) {
@@ -149,20 +150,14 @@ fun Product(modifier: Modifier, product: ProductItemState, onFavoriteButtonClick
                     alignment = Alignment.CenterHorizontally
                 )
             ) {
-                Button(
-                    modifier = modifier.fillMaxWidth(),
-                    elevation = ButtonDefaults.buttonElevation(10.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = PrincipalColor,
-                        contentColor = Color(0xFFFFFFFF)
-                    ),
-                    shape = RoundedCornerShape(2.dp),
-                    onClick = { handleClickBuyButton() }
+                DefaultButton(
+                    modifier = modifier.fillMaxWidth().height(35.dp),
+                    onClick = onBuyButtonClick
                 ) {
                     Text(
                         text = "COMPRAR",
                         style = TextStyle(
-                            fontSize = 10.sp,
+                            fontSize = 12.sp,
                             fontFamily = FontFamily.SansSerif,
                             fontWeight = FontWeight(600),
                             color = Color(0xFFFFFFFF),
@@ -189,6 +184,6 @@ fun ProductPreview() {
             "Monitor Gamer",
             price = "R$ 1149,99",
             img = "https://images8.kabum.com.br/produtos/fotos/444038/monitor-gamer-lg-ultragear-27-full-hd-144hz-1ms-ips-hdmi-e-displayport-hdr-10-99-srgb-freesync-premium-vesa-27gn65r_1684763831_m.jpg"
-        ), {})
+        ), {}, {})
     }
 }
