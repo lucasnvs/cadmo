@@ -37,6 +37,7 @@ import com.lucasnvs.cadmo.R
 import com.lucasnvs.cadmo.ui.components.ListRedirectOption
 import com.lucasnvs.cadmo.ui.components.bars.NavigationBottomBar
 import com.lucasnvs.cadmo.ui.components.bars.MainTopBar
+import com.lucasnvs.cadmo.ui.components.buttons.DefaultButton
 import com.lucasnvs.cadmo.ui.shared.Screen
 import com.lucasnvs.cadmo.ui.theme.CadmoTheme
 import com.lucasnvs.cadmo.ui.theme.LightGrayColor
@@ -113,8 +114,7 @@ fun Login(
             label = { Text("Senha", color = LightGrayColor) },
             modifier = modFullWidth
         )
-        Button(
-            shape = RoundedCornerShape(2.dp),
+        DefaultButton(
             onClick = { /*TODO*/ },
             modifier = modFullWidth.height(45.dp)
         ) {
@@ -183,8 +183,7 @@ fun SignIn(
             label = { Text("Confirme sua senha *", color = LightGrayColor) },
             modifier = modFullWidth
         )
-        Button(
-            shape = RoundedCornerShape(2.dp),
+        DefaultButton(
             onClick = { /*TODO*/ },
             modifier = modFullWidth.height(45.dp)
         ) {

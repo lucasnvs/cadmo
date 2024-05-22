@@ -54,6 +54,7 @@ fun SectionProduct(
                 Product(
                     modifier = modifier,
                     product = products[index],
+                    onBuyButtonClick = {},
                     onFavoriteButtonClick = {
                         viewModel.onItemFavoriteClick( sectionKey = name, index )
                     }
