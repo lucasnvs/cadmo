@@ -17,13 +17,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.lucasnvs.cadmo.ui.home.HomeViewModel
+import com.lucasnvs.cadmo.ui.shared.ProductItemState
 import java.util.Locale
 
 @Composable
 fun SectionProduct(
     modifier: Modifier,
     name: String,
-    products: List<HomeViewModel.HomeItemUiState>,
+    products: List<ProductItemState>,
     viewModel: HomeViewModel
 ) {
     Column(
@@ -53,8 +54,8 @@ fun SectionProduct(
                 Product(
                     modifier = modifier,
                     product = products[index],
-                    onCartButtonClick = {
-                        viewModel.onItemCartClicked( sectionKey = name, index)
+                    onFavoriteButtonClick = {
+                        viewModel.onItemFavoriteClick( sectionKey = name, index )
                     }
                 )
             }

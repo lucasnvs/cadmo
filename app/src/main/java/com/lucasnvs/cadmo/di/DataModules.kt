@@ -2,14 +2,12 @@ package com.lucasnvs.cadmo.di
 
 import android.content.Context
 import androidx.room.Room
-import com.lucasnvs.cadmo.data.DefaultFavoriteRepository
-import com.lucasnvs.cadmo.data.DefaultProductRepository
-import com.lucasnvs.cadmo.data.FavoriteRepository
-import com.lucasnvs.cadmo.data.ProductRepository
+import com.lucasnvs.cadmo.data.repository.ProductRepositoryImpl
+import com.lucasnvs.cadmo.domain.repository.ProductRepository
 import com.lucasnvs.cadmo.data.source.local.CadmoDatabase
-import com.lucasnvs.cadmo.data.source.local.ProductDAO
-import com.lucasnvs.cadmo.data.source.network.KabumProductNetworkDataSource
-import com.lucasnvs.cadmo.data.source.network.NetworkDataSource
+import com.lucasnvs.cadmo.domain.local.ProductDAO
+import com.lucasnvs.cadmo.data.source.remote.KabumProductNetworkDataSource
+import com.lucasnvs.cadmo.domain.remote.NetworkDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -24,11 +22,8 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    abstract fun bindProductRepository(repository: DefaultProductRepository): ProductRepository
+    abstract fun bindProductRepository(repository: ProductRepositoryImpl): ProductRepository
 
-    @Singleton
-    @Binds
-    abstract fun bindFavoriteRepository(repository: DefaultFavoriteRepository): FavoriteRepository
 }
 
 @Module

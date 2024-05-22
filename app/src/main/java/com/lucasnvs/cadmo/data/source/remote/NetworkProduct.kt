@@ -1,4 +1,4 @@
-package com.lucasnvs.cadmo.data.source.network
+package com.lucasnvs.cadmo.data.source.remote
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -6,13 +6,11 @@ import kotlinx.serialization.Serializable
 @Serializable()
 data class  NetworkProduct(
     @SerialName(value = "codigo")
-    val id: Int,
+    val id: Long,
     @SerialName(value = "nome")
     val name: String,
     @SerialName(value = "preco_formatado")
     val price: String,
     @SerialName(value = "img")
     val imgSrc: String,
-    @SerialName(value = "is_openbox")
-    val isOpenBox: Boolean,
 )

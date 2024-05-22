@@ -1,4 +1,4 @@
-package com.lucasnvs.cadmo.data.source.network
+package com.lucasnvs.cadmo.data.source.remote
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.SerialName

@@ -50,7 +50,7 @@ android {
 }
 
 dependencies {
-    def room_version = "2.4.1"
+    def room_version = "2.5.0"
     def hilt_version = "2.44"
 
     // Retrofit

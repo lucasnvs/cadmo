@@ -100,7 +100,7 @@ fun HomeScreenPreview() {
 }
 
 @Composable
-fun Content( modifier: Modifier = Modifier, innerPadding: PaddingValues, viewModel: HomeViewModel) {
+fun Content( modifier: Modifier = Modifier, innerPadding: PaddingValues, viewModel: HomeViewModel ) {
     Box(
         modifier
             .fillMaxSize()

@@ -39,18 +39,17 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.lucasnvs.cadmo.ui.theme.LightGrayColor
 import com.lucasnvs.cadmo.ui.theme.PrincipalColor
-import com.lucasnvs.cadmo.ui.home.HomeViewModel
+import com.lucasnvs.cadmo.ui.shared.ProductItemState
 
 @Composable
-fun Product(modifier: Modifier, product: HomeViewModel.HomeItemUiState, onCartButtonClick: () -> Unit) {
+fun Product(modifier: Modifier, product: ProductItemState, onFavoriteButtonClick: () -> Unit) {
 
     fun handleClickBuyButton() {
 
     }
 
-    val isOnCart = product.isOnCart.value
-    var cartIconColor = LightGrayColor
-    if(isOnCart) cartIconColor = PrincipalColor
+    val isOnCart = product.isFavorite.value
+    val cartIconColor = if(isOnCart) PrincipalColor else LightGrayColor
 
     val painter = rememberAsyncImagePainter(product.img)
 
@@ -79,12 +78,12 @@ fun Product(modifier: Modifier, product: HomeViewModel.HomeItemUiState, onCartBu
                         containerColor = Color.Transparent,
                         contentColor = cartIconColor,
                     ),
-                    onClick = onCartButtonClick,
+                    onClick = onFavoriteButtonClick,
                     modifier = modifier.size(25.dp)
                 ) {
                     Icon(
                         imageVector = if(isOnCart) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,
-                        contentDescription = "Carrinho",
+                        contentDescription = "Favorito",
                         modifier = modifier.size(22.dp)
                     )
                 }
@@ -182,8 +181,11 @@ fun ProductPreview() {
     Box(modifier = Modifier
         .background(Color(0xFFFCFCCC))
         .padding(10.dp)) {
-        Product(modifier = Modifier, product = HomeViewModel.HomeItemUiState(
-            isOnCart = mutableStateOf(false),
+        Product(
+            modifier = Modifier,
+            product = ProductItemState(
+                id = 1,
+            isFavorite = mutableStateOf(false),
             "Monitor Gamer",
             price = "R$ 1149,99",
             img = "https://images8.kabum.com.br/produtos/fotos/444038/monitor-gamer-lg-ultragear-27-full-hd-144hz-1ms-ips-hdmi-e-displayport-hdr-10-99-srgb-freesync-premium-vesa-27gn65r_1684763831_m.jpg"

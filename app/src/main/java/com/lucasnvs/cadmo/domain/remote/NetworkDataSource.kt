@@ -1,4 +1,6 @@
-package com.lucasnvs.cadmo.data.source.network
+package com.lucasnvs.cadmo.domain.remote
+
+import com.lucasnvs.cadmo.data.source.remote.NetworkProduct
 
 interface NetworkDataSource {
 

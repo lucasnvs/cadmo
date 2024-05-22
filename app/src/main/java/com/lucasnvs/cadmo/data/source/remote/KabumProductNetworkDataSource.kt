@@ -1,5 +1,6 @@
-package com.lucasnvs.cadmo.data.source.network
+package com.lucasnvs.cadmo.data.source.remote
 
+import com.lucasnvs.cadmo.domain.remote.NetworkDataSource
 import javax.inject.Inject
 
 data class DataSection(

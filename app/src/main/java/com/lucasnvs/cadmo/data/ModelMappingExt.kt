@@ -1,7 +1,8 @@
 package com.lucasnvs.cadmo.data
 
 import com.lucasnvs.cadmo.data.source.local.LocalProduct
-import com.lucasnvs.cadmo.data.source.network.NetworkProduct
+import com.lucasnvs.cadmo.data.source.remote.NetworkProduct
+import com.lucasnvs.cadmo.domain.model.Product
 
 
 // External to local
@@ -10,7 +11,6 @@ fun Product.toLocal() = LocalProduct(
     name = name,
     price = price,
     imgSrc = imgSrc,
-    isOpenBox = isOpenBox
 )
 
 fun List<Product>.toLocal() = map(Product::toLocal)
@@ -21,7 +21,6 @@ fun LocalProduct.toExternal() = Product(
     name = name,
     price = price,
     imgSrc = imgSrc,
-    isOpenBox = isOpenBox
 )
 
 // Nota: O JvmName é usado pra prover o nome único pra cada extensão da função com o mesmo nome.
@@ -35,7 +34,6 @@ fun NetworkProduct.toLocal() = LocalProduct(
     name = name,
     price = price,
     imgSrc = imgSrc,
-    isOpenBox = isOpenBox
 )
 
 @JvmName("networkToLocal")
@@ -47,7 +45,6 @@ fun LocalProduct.toNetwork() = NetworkProduct(
     name = name,
     price = price,
     imgSrc = imgSrc,
-    isOpenBox = isOpenBox
 )
 
 fun List<LocalProduct>.toNetwork() = map(LocalProduct::toNetwork)

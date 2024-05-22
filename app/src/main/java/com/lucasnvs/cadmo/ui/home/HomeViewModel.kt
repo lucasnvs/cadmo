@@ -1,13 +1,15 @@
 package com.lucasnvs.cadmo.ui.home
 
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lucasnvs.cadmo.data.Product
-import com.lucasnvs.cadmo.data.ProductRepository
+import com.lucasnvs.cadmo.domain.model.Product
+import com.lucasnvs.cadmo.domain.repository.ProductRepository
+import com.lucasnvs.cadmo.ui.shared.ProductItemState
+import com.lucasnvs.cadmo.ui.shared.toItemState
+import com.lucasnvs.cadmo.ui.shared.toModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -20,16 +22,9 @@ class HomeViewModel @Inject constructor(
     private val repository: ProductRepository,
 ) : ViewModel() {
 
-    data class HomeItemUiState(
-        val isOnCart: MutableState<Boolean> = mutableStateOf(false),
-        val name: String,
-        val price: String,
-        val img: String,
-    )
-
     data class HomeUiState(
         var isFetchingSections: Boolean = false,
-        val sections: Map<String, List<HomeItemUiState>> = mutableMapOf(),
+        val sections: Map<String, List<ProductItemState>> = mutableMapOf(),
     )
 
 //    val HomeUiState.canAddToCartProduct: Boolean get() = isSignedIn
@@ -41,39 +36,51 @@ class HomeViewModel @Inject constructor(
         fetchSections()
     }
 
-    fun onItemCartClicked(sectionKey: String, index: Int) {
+    private fun addProductToFavorites(product: Product) {
+        viewModelScope.launch {
+            repository.addToFavorites(product)
+        }
+    }
+
+    private fun deleteProductFromFavorites(product: Product) {
+        viewModelScope.launch {
+            repository.deleteFromFavorites(product)
+        }
+    }
+
+    fun onItemFavoriteClick(sectionKey: String, index: Int) {
         val currentSections = uiState.sections.toMutableMap()
-
         if (!currentSections.containsKey(sectionKey)) return
-
         val itemList = currentSections[sectionKey] ?: return
-
         if (index !in itemList.indices) return
 
         val updatedItemList = itemList.toMutableList()
-        updatedItemList[index] = updatedItemList[index].copy(isOnCart = mutableStateOf(!updatedItemList[index].isOnCart.value))
+        val item = updatedItemList[index]
+
+        if(item.isFavorite.value) {
+            deleteProductFromFavorites(item.toModel())
+            updatedItemList[index] = updatedItemList[index].copy(isFavorite = mutableStateOf(false))
+        } else {
+            addProductToFavorites(item.toModel())
+            updatedItemList[index] = updatedItemList[index].copy(isFavorite = mutableStateOf(true))
+        }
 
         currentSections[sectionKey] = updatedItemList
-
         uiState = uiState.copy(sections = currentSections)
     }
 
-    private fun mapProduct(product: Product): HomeItemUiState {
-        return HomeItemUiState(
-            name = product.name,
-            price = product.price,
-            img = product.imgSrc,
-        )
-    }
+    private fun convertProductMapToProductItemUiStateMap(productMap: Map<String, List<Product>>): Map<String, List<ProductItemState>> {
+        val homeItemUiStateMap = mutableMapOf<String, List<ProductItemState>>()
 
-    private fun convertProductMapToHomeItemUiStateMap(productMap: Map<String, List<Product>>): Map<String, List<HomeItemUiState>> {
-        val homeItemUiStateMap = mutableMapOf<String, List<HomeItemUiState>>()
+        viewModelScope.launch {
+            val favoritesList = repository.getAllFavorites()
 
-        for ((key, productList) in productMap) {
-            val homeItemUiStateList = productList.map { product ->
-                mapProduct(product)
-            }
-            homeItemUiStateMap[key] = homeItemUiStateList
+            homeItemUiStateMap.putAll(productMap.map { (key, productList) ->
+                key to productList.map { product ->
+                    val isFavorite = favoritesList.any { favorite -> favorite.id == product.id }
+                    product.toItemState(isFavorite = mutableStateOf(isFavorite))
+                }
+            })
         }
 
         return homeItemUiStateMap
@@ -92,8 +99,7 @@ class HomeViewModel @Inject constructor(
                 delay(2000)
                 uiState = uiState.copy(
                     isFetchingSections = false,
-                    sections = convertProductMapToHomeItemUiStateMap(sections),
-
+                    sections = convertProductMapToProductItemUiStateMap(sections),
                 )
 
             } catch (ioe: IOException) {
