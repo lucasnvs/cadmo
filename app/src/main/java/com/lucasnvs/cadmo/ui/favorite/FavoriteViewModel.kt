@@ -1,84 +1,74 @@
 package com.lucasnvs.cadmo.ui.favorite
 
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lucasnvs.cadmo.R
 import com.lucasnvs.cadmo.domain.model.Product
 import com.lucasnvs.cadmo.domain.repository.ProductRepository
 import com.lucasnvs.cadmo.ui.shared.ProductItemState
 import com.lucasnvs.cadmo.ui.shared.toItemState
-import com.lucasnvs.cadmo.ui.shared.toModel
+import com.lucasnvs.cadmo.ui.util.Async
+import com.lucasnvs.cadmo.ui.util.WhileUiSubscribed
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
 class FavoriteViewModel @Inject constructor(
-  private val repository: ProductRepository
+  private val repository: ProductRepository,
 ) : ViewModel() {
 
     data class FavoriteUiState(
         var isLoading: Boolean = false,
-        var favoriteProducts: List<ProductItemState> = mutableListOf()
+        var favoriteProducts: List<ProductItemState> = emptyList(),
+        val userMessage: Int? = null
     )
 
-    var uiState by mutableStateOf(FavoriteUiState())
-        private set
+    private val _userMessage: MutableStateFlow<Int?> = MutableStateFlow(null)
+    private val _isLoading = MutableStateFlow(false)
+    private val _favoriteProductsAsync = repository.getAllFavoritesStream()
+        .map { Async.Success(it) }
+        .catch<Async<List<Product>>> { emit(Async.Error(R.string.loading_favorites_error))}
 
-    init {
-        fetchFavorite()
-    }
-
-    private fun addProductToFavorites(product: Product) {
-        viewModelScope.launch {
-            repository.addToFavorites(product)
-        }
-    }
-
-    private fun deleteProductFromFavorites(product: Product) {
-        viewModelScope.launch {
-            repository.deleteFromFavorites(product)
-        }
-    }
-
-    fun onItemFavoriteClick(index: Int) {
-
-        val updatedItemList = uiState.favoriteProducts.toMutableList()
-        val item = updatedItemList[index]
-
-        if(item.isFavorite.value) {
-            deleteProductFromFavorites(item.toModel())
-            updatedItemList.removeAt(index)
-        }
-
-        uiState = uiState.copy(favoriteProducts = updatedItemList)
-    }
-
-
-    private var fetchJob: Job? = null
-
-    fun fetchFavorite() {
-        fetchJob?.cancel()
-        uiState = uiState.copy(isLoading = true)
-
-        fetchJob = viewModelScope.launch {
-            try {
-                val favoriteProducts = repository.getAllFavorites()
-
-                uiState = uiState.copy(
-                    isLoading = false,
-                    favoriteProducts = favoriteProducts.toItemState(mutableStateOf(true))
-                )
-
-            } catch (ioe: IOException) {
-                // Handle the error and notify the UI when appropriate.
-                // val messages = getMessagesFromThrowable(ioe)
-                // uiState = uiState.copy(userMessages = messages)
+    val uiState: StateFlow<FavoriteUiState> = combine(
+        _isLoading, _userMessage, _favoriteProductsAsync
+    ) { isLoading, userMessage, favoriteProductsAsync ->
+        when (favoriteProductsAsync) {
+            Async.Loading -> {
+                FavoriteUiState(isLoading = true)
             }
+            is Async.Error -> {
+                FavoriteUiState(userMessage = favoriteProductsAsync.errorMessage)
+            }
+            is Async.Success -> {
+                FavoriteUiState(
+                    favoriteProducts = favoriteProductsAsync.data.toItemState(mutableStateOf(true)),
+                    isLoading = isLoading,
+                    userMessage = userMessage
+                )
+            }
+        }
+    }
+        .stateIn(
+            scope = viewModelScope,
+            started = WhileUiSubscribed,
+            initialValue = FavoriteUiState(isLoading = true)
+        )
+
+    fun onFavoriteClick(product: Product, favorited: Boolean) = viewModelScope.launch {
+        if(favorited) {
+            repository.addToFavorites(product)
+        } else {
+            repository.deleteFromFavorites(product)
         }
     }
 }

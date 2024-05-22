@@ -14,6 +14,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,16 +31,15 @@ import com.lucasnvs.cadmo.ui.components.bars.MainTopBar
 import com.lucasnvs.cadmo.ui.components.bars.NavigationBottomBar
 import com.lucasnvs.cadmo.ui.home.Loading
 import com.lucasnvs.cadmo.ui.shared.Screen
+import com.lucasnvs.cadmo.ui.shared.toModel
 import com.lucasnvs.cadmo.ui.theme.CadmoTheme
-
 @Composable
 fun FavoriteScreen(
     modifier: Modifier = Modifier,
     appState: CadmoAppState,
     viewModel: FavoriteViewModel = hiltViewModel()
 ) {
-
-    val favoriteProducts = viewModel.uiState.favoriteProducts
+    val uiState by viewModel.uiState.collectAsState()
 
     Scaffold(
         topBar = {
@@ -62,7 +64,7 @@ fun FavoriteScreen(
             )
         }
     ) { innerPadding ->
-        if(viewModel.uiState.isLoading) {
+        if(uiState.isLoading) {
             Loading(modifier = Modifier, innerPadding = innerPadding)
         } else {
             Box(
@@ -80,11 +82,11 @@ fun FavoriteScreen(
                     ),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    items(favoriteProducts) {  product ->
+                    items(uiState.favoriteProducts) {  product ->
                         Product(
                             modifier = Modifier,
                             product = product,
-                            onFavoriteButtonClick = { viewModel.onItemFavoriteClick(favoriteProducts.indexOf(product))}
+                            onFavoriteButtonClick = { viewModel.onFavoriteClick(product.toModel(), !product.isFavorite.value)} // provavelmente eu posso mudar todo o valor de ProductUI ou nao, porque nao e necessario o valor mutavel, ao modificar ele modifica o item e a lista por si só
                         )
                     }
                 }
