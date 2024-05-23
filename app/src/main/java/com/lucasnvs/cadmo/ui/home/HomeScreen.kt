@@ -27,13 +27,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.lucasnvs.cadmo.domain.model.Product
 import com.lucasnvs.cadmo.ui.CadmoAppState
 import com.lucasnvs.cadmo.ui.components.SearchTextField
 import com.lucasnvs.cadmo.ui.components.SectionProduct
 import com.lucasnvs.cadmo.ui.components.bars.MainTopBar
 import com.lucasnvs.cadmo.ui.components.bars.NavigationBottomBar
+import com.lucasnvs.cadmo.ui.shared.ProductItemState
 import com.lucasnvs.cadmo.ui.theme.CadmoTheme
 import com.lucasnvs.cadmo.ui.shared.Screen
+import com.lucasnvs.cadmo.ui.shared.toItemState
 import kotlinx.coroutines.launch
 
 @Composable
@@ -43,9 +46,10 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
 
+    val uiState = viewModel.uiState
+
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
-
 
     Scaffold(
         snackbarHost = {
@@ -83,10 +87,14 @@ fun HomeScreen(
         },
 
     ) { innerPadding ->
-        if(viewModel.uiState.isFetchingSections) {
+        if(uiState.isLoading) {
             Loading(modifier, innerPadding)
         } else {
-            Content(innerPadding = innerPadding, viewModel = viewModel)
+            Content(
+                sections = viewModel.getSections(),
+                onFavoriteClick = viewModel::onFavoriteClick,
+                modifier = Modifier.padding(innerPadding)
+            )
         }
     }
 }
@@ -100,11 +108,14 @@ fun HomeScreenPreview() {
 }
 
 @Composable
-fun Content( modifier: Modifier = Modifier, innerPadding: PaddingValues, viewModel: HomeViewModel ) {
+fun Content(
+    sections: Map<String, List<ProductItemState>>,
+    onFavoriteClick: (Product, Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Box(
         modifier
             .fillMaxSize()
-            .padding(innerPadding)
             .background(Color(0xFFF9F9F9))
     ) {
 
@@ -114,8 +125,13 @@ fun Content( modifier: Modifier = Modifier, innerPadding: PaddingValues, viewMod
                 alignment = Alignment.CenterVertically
             ),
         ) {
-            items(viewModel.uiState.sections.entries.toList()) { (sectionName, products) ->
-                SectionProduct(modifier = modifier, name = sectionName, products = products, viewModel = viewModel)
+            items(sections.entries.toList()) { (sectionName, products) ->
+                SectionProduct(
+                    modifier = Modifier,
+                    name = sectionName,
+                    products = products,
+                    onItemFavoriteClick = onFavoriteClick
+                )
             }
         }
     }

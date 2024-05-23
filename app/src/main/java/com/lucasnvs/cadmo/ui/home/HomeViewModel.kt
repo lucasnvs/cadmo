@@ -23,8 +23,10 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     data class HomeUiState(
-        var isFetchingSections: Boolean = false,
-        val sections: Map<String, List<ProductItemState>> = mutableMapOf(),
+        var isLoading: Boolean = false,
+        val bestRatedList: List<Product> = emptyList(),
+        val moreSearched: List<Product> = emptyList(),
+        val ninjaOfferList: List<Product> = emptyList(),
     )
 
 //    val HomeUiState.canAddToCartProduct: Boolean get() = isSignedIn
@@ -33,80 +35,49 @@ class HomeViewModel @Inject constructor(
         private set
 
     init {
-        fetchSections()
-    }
-
-    private fun addProductToFavorites(product: Product) {
         viewModelScope.launch {
-            repository.addToFavorites(product)
+            uiState = uiState.copy(bestRatedList = repository.getBestRated())
+            uiState = uiState.copy(moreSearched = repository.getMoreSearched())
+            uiState = uiState.copy(ninjaOfferList = repository.getNinjaOffer())
         }
+
+        uiState = uiState.copy(isLoading = false)
     }
 
-    private fun deleteProductFromFavorites(product: Product) {
-        viewModelScope.launch {
+    fun getSections(): Map<String, List<ProductItemState>> {
+        return mapOf(
+            "MAIS PROCURADOS" to uiState.moreSearched.toItemState(),
+            "MELHOR AVALIADOS" to uiState.bestRatedList.toItemState(),
+            "OFERTA NINJA" to uiState.ninjaOfferList.toItemState()
+        )
+    }
+
+    fun onFavoriteClick(product: Product, favorited: Boolean) = viewModelScope.launch {
+        if(favorited) {
+            repository.addToFavorites(product)
+        } else {
             repository.deleteFromFavorites(product)
         }
     }
 
-    fun onItemFavoriteClick(sectionKey: String, index: Int) {
-        val currentSections = uiState.sections.toMutableMap()
-        if (!currentSections.containsKey(sectionKey)) return
-        val itemList = currentSections[sectionKey] ?: return
-        if (index !in itemList.indices) return
-
-        val updatedItemList = itemList.toMutableList()
-        val item = updatedItemList[index]
-
-        if(item.isFavorite.value) {
-            deleteProductFromFavorites(item.toModel())
-            updatedItemList[index] = updatedItemList[index].copy(isFavorite = mutableStateOf(false))
-        } else {
-            addProductToFavorites(item.toModel())
-            updatedItemList[index] = updatedItemList[index].copy(isFavorite = mutableStateOf(true))
-        }
-
-        currentSections[sectionKey] = updatedItemList
-        uiState = uiState.copy(sections = currentSections)
-    }
-
-    private fun convertProductMapToProductItemUiStateMap(productMap: Map<String, List<Product>>): Map<String, List<ProductItemState>> {
-        val homeItemUiStateMap = mutableMapOf<String, List<ProductItemState>>()
-
-        viewModelScope.launch {
-            val favoritesList = repository.getAllFavorites()
-
-            homeItemUiStateMap.putAll(productMap.map { (key, productList) ->
-                key to productList.map { product ->
-                    val isFavorite = favoritesList.any { favorite -> favorite.id == product.id }
-                    product.toItemState(isFavorite = mutableStateOf(isFavorite))
-                }
-            })
-        }
-
-        return homeItemUiStateMap
-    }
-
-    private var fetchJob: Job? = null
-
-    fun fetchSections() {
-        fetchJob?.cancel()
-        uiState = uiState.copy(isFetchingSections = true)
-
-        fetchJob = viewModelScope.launch {
-            try {
-                val sections = repository.getSections()
-
-                delay(2000)
-                uiState = uiState.copy(
-                    isFetchingSections = false,
-                    sections = convertProductMapToProductItemUiStateMap(sections),
-                )
-
-            } catch (ioe: IOException) {
-                // Handle the error and notify the UI when appropriate.
-                // val messages = getMessagesFromThrowable(ioe)
-                // uiState = uiState.copy(userMessages = messages)
-            }
-        }
-    }
+//    fun onItemFavoriteClick(sectionKey: String, index: Int) {
+//        val currentSections = uiState.sections.toMutableMap()
+//        if (!currentSections.containsKey(sectionKey)) return
+//        val itemList = currentSections[sectionKey] ?: return
+//        if (index !in itemList.indices) return
+//
+//        val updatedItemList = itemList.toMutableList()
+//        val item = updatedItemList[index]
+//
+//        if(item.isFavorite.value) {
+//            deleteProductFromFavorites(item.toModel())
+//            updatedItemList[index] = updatedItemList[index].copy(isFavorite = mutableStateOf(false))
+//        } else {
+//            addProductToFavorites(item.toModel())
+//            updatedItemList[index] = updatedItemList[index].copy(isFavorite = mutableStateOf(true))
+//        }
+//
+//        currentSections[sectionKey] = updatedItemList
+//        uiState = uiState.copy(sections = currentSections)
+//    }
 }
