@@ -1,11 +1,7 @@
 package com.lucasnvs.cadmo.data.repository
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import com.lucasnvs.cadmo.domain.model.Product
-import com.lucasnvs.cadmo.data.source.remote.DataSection
 import com.lucasnvs.cadmo.domain.remote.NetworkDataSource
-import com.lucasnvs.cadmo.data.source.remote.NetworkProduct
 import com.lucasnvs.cadmo.data.toExternal
 import com.lucasnvs.cadmo.data.toLocal
 import com.lucasnvs.cadmo.di.ApplicationScope

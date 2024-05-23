@@ -3,11 +3,6 @@ package com.lucasnvs.cadmo.data.source.remote
 import com.lucasnvs.cadmo.domain.remote.NetworkDataSource
 import javax.inject.Inject
 
-data class DataSection(
-    val key: String,
-    val list: List<NetworkProduct>
-)
-
 class KabumProductNetworkDataSource @Inject constructor() : NetworkDataSource {
 
     private var moreSearchedList = mutableListOf<NetworkProduct>()
