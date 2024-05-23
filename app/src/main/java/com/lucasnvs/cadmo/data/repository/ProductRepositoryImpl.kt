@@ -27,6 +27,9 @@ class ProductRepositoryImpl @Inject constructor(
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
     @ApplicationScope private val scope: CoroutineScope,
     ) : ProductRepository {
+    override suspend fun refresh() {
+        TODO("Not yet implemented")
+    }
 
     override suspend fun getKabumProducts(): List<Product> {
         TODO()
@@ -61,20 +64,16 @@ class ProductRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getFavoriteStream(): Flow<Product> {
-        TODO("Not yet implemented")
+    override fun getFavoriteStream(favoriteId: String): Flow<Product> {
+        return localDataSource.observeById(favoriteId).map { it.toExternal() }
     }
 
     override suspend fun getAllFavorites(): List<Product> {
         return localDataSource.getAllFavorites().toExternal()
     }
 
-    override suspend fun getFavorite(productId: Int): Product? {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun refresh() {
-        TODO("Not yet implemented")
+    override suspend fun getFavorite(productId: Long): Product? {
+        return localDataSource.getFavorite(productId)?.toExternal()
     }
 
     override suspend fun addToFavorites(product: Product) {
@@ -82,7 +81,7 @@ class ProductRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteAllFavorites(product: Product) {
-        TODO("Not yet implemented")
+        localDataSource.deleteAll()
     }
 
     override suspend fun deleteFromFavorites(product: Product) {

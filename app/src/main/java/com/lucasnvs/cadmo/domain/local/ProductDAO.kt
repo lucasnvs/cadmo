@@ -17,10 +17,12 @@ interface ProductDAO {
     @Query("SELECT * FROM favorites")
     suspend fun getAllFavorites(): List<LocalProduct>
     @Query("SELECT * FROM favorites WHERE id = :id")
-    suspend fun getFavorite(id: Int): LocalProduct?
+    suspend fun getFavorite(id: Long): LocalProduct?
     @Upsert
     suspend fun upsertFavorite(product: LocalProduct)
     @Query("DELETE FROM favorites WHERE id = :favoriteId")
     suspend fun deleteFavoriteById(favoriteId: String): Int
+    @Query("DELETE FROM favorites")
+    suspend fun deleteAll()
 
 }
