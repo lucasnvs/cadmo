@@ -35,25 +35,16 @@ class ProductRepositoryImpl @Inject constructor(
         TODO()
     }
 
-    override suspend fun getSections(): Map<String, List<Product>> {
-        val products = networkDataSource.loadProducts()
-        val sections = sectionIsOpenBox(products)
-
-
-        val mapSections = mutableMapOf<String, List<Product>>()
-        for (section in sections) {
-            mapSections[section.key] = section.list.toExternal()
-        }
-
-        return mapSections
+    override suspend fun getMoreSearched(): List<Product> {
+        return networkDataSource.getMoreSearched().toExternal()
     }
 
-    private fun sectionIsOpenBox(produtos: List<NetworkProduct>): List<DataSection> {
+    override suspend fun getBestRated(): List<Product> {
+        return networkDataSource.getBestRated().toExternal()
+    }
 
-        return listOf(
-            DataSection(key = "Mais procurados", list = produtos),
-            DataSection(key = "DESCONTOS DA SEMANA", list = produtos)
-        )
+    override suspend fun getNinjaOffer(): List<Product> {
+        return networkDataSource.getNinjaOffer().toExternal()
     }
 
     override fun getAllFavoritesStream(): Flow<List<Product>> {
