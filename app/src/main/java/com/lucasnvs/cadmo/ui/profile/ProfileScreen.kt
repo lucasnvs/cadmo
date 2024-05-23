@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.OutlinedTextField
@@ -76,9 +77,8 @@ fun ProfileScreen(
 
 @Composable
 fun Profile(modifier: Modifier = Modifier) {
-    val iconShoppingBasket = ImageVector.vectorResource(id = R.drawable.baseline_shopping_basket_24)
     val profileOptions = listOf(
-        "Meus Pedidos" to iconShoppingBasket,
+        "Meus Pedidos" to Icons.Filled.ShoppingCart,
         "Favoritos" to Icons.Filled.Favorite,
         "Configurações" to Icons.Filled.Settings
     )
